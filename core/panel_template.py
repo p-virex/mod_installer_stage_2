@@ -27,3 +27,9 @@ class TemplatePanel(wx.Panel):
     def set_tooltip(item, text):
         item.SetToolTip(wx.ToolTip(text))
 
+    @staticmethod
+    def get_convert_bitmap(image_path):
+        return wx.Image(image_path, wx.BITMAP_TYPE_BMP).ConvertToBitmap()
+
+    def get_static_bitmap(self, path_image):
+        return wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(path_image))

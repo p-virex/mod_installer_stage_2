@@ -1,45 +1,133 @@
 {
-  "Pricely": {
-    "pric 1": [
-      "download.jpg",
-      "Best prycel"
+  "Pro Tanki": {
+    "checkBox": true,
+    "Расширенные маркеры техники": [
+      null,
+      "protanki/advancedVehicleMarkers.wotmod",
+      null
     ],
-    "pric 2": [
-      "download2.jpg",
-      "Best prycel"
-    ],
-    "pric 3": [
+    "Стратегический прицел": [
       "download3.jpg",
+      "protanki/crosshair_strategic.wotmod",
+      null
+    ],
+    "Панель урона ProTanki": [
+      null,
+      "protanki/damagePanel.wotmod",
+      "Панель урона от ProTanki"
+    ],
+    "Стикеры урона ProTanki": [
+      "download3.jpg",
+      "protanki/tv.protanki.damagestickers.wotmod",
+      "Красивые стикеры урона"
+    ],
+    "Sight mod": [
+      "download3.jpg",
+      "protanki/tv.protanki.sights.wotmod",
+      "Best prycel"
+    ],
+    "Spotted ProTanki": [
+      "download3.jpg",
+      "protanki/tv.protanki.spotted_1.6.wotmod",
+      "Best prycel"
+    ],
+    "Убрать дым от трупов": [
+      "download.jpg",
+      "protanki/tweakerSmokeDead.wotmod",
+      "Модификация отключает дым от уничтоженных танков, тем самым повышая FPS"
+    ],
+    "Отключить облака": [
+      "download3.jpg",
+      "protanki/tweakerClouds.wotmod",
+      "Best prycel"
+    ],
+    "Графические настройки": [
+      "download3.jpg",
+      "protanki/tweakerGraphicsSettings.wotmod",
+      "Best prycel"
+    ],
+    "Отключить туман": [
+      "download3.jpg",
+      "protanki/tweakerSkyFog.wotmod",
       "Best prycel"
     ]
   },
-  "Удобный мод на каждый день": [
+  "Моды от Spoter": {
+    "checkBox": true,
+    "Discord ангар": [
+      "download3.jpg",
+      "spoter/spoter.discordHangar_1.01.wotmod",
+      "Best prycel"
+    ],
+    "Процент отметок на стволе": [
+      "download3.jpg",
+      "spoter/spoter.marksOnGunExtended_8.06.wotmod",
+      "Best prycel"
+    ],
+    "Персональные миссии": [
+      "download3.jpg",
+      "spoter/spoter.mod_personalMissionColored_1.04.wotmod",
+      "Best prycel"
+    ],
+    "Какие-то тултипы": [
+      "download3.jpg",
+      "spoter/spoter.mod_tooltipsCountItemsLimitExtend_1.02.wotmod",
+      "Best prycel"
+    ],
+    "Расширенное что-то там": [
+      "download3.jpg",
+      "spoter/spoter.spotted_extended_light_4.07.wotmod",
+      "Best prycel"
+    ]
+  },
+  "PY mods": {
+    "checkBox": true,
+    "PlayerPanelsAPI": [
+      "download3.jpg",
+      "PYmods/PlayerPanelsAPI.wotmod",
+      null
+    ],
+    "PlayersPanelHP": [
+      "download3.jpg",
+      "PYmods/PlayersPanelHP.wotmod",
+      null
+    ],
+    "PYModsCore": [
+      "download3.jpg",
+      "PYmods/PYmodsCore.wotmod",
+      null
+    ]
+  },
+  "Gambiter GUI Flash": [
     "download.jpg",
+    "gambiter.guiflash_0.3.1.wotmod",
     "Best prycel"
   ],
-  "Прикольный мод": [
+  "Izeberg setting API": [
     "download.jpg",
+    "izeberg.modsettingsapi_1.3.0.wotmod",
     "Best prycel"
   ],
-  "Мне надоело придумывать": [
+  "Реплей менеджер": [
     "download.jpg",
+    "net.wargaming.replaysmanager_3.4.4.wotmod",
     "Best prycel"
   ],
-  "Демо режим": {
-    "А можно вот  так 1": [
+  "Demo mode": {
+    "Вариант 1": [
       "download.jpg",
       "Best prycel"
     ],
-    "мод2 2": [
+    "Вариант 2": [
       "download.jpg",
       "Best prycel"
     ],
-    "Мод 3": [
+    "Вариант 3": [
       "download.jpg",
       "Best prycel"
     ]
   },
-  "Очень много модов?": [
+  "Battle result": [
     "download.jpg",
     "Best prycel"
   ],
@@ -56,6 +144,18 @@
     "Best prycel"
   ],
   "Короче, я адаптивная панель, влезет сколько надо": [
+    "download.jpg",
+    "Best prycel"
+  ],
+  "Короче, я адаптивная панель, влезет сколько надо2": [
+    "download.jpg",
+    "Best prycel"
+  ],
+  "Короче, я адаптивная панель, влезет сколько надо3": [
+    "download.jpg",
+    "Best prycel"
+  ],
+  "Короче, я адаптивная панель, влезет сколько надо4": [
     "download.jpg",
     "Best prycel"
   ]

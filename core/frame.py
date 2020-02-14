@@ -1,6 +1,7 @@
 import wx
 
-from common.constants import TITLE, SIZE_FRAME, FRAME_STYLE, ICON_PATH
+from common.constants import TITLE, SIZE_FRAME, FRAME_STYLE
+from common.path import ICON_PATH
 
 
 class ModsFrame(wx.Frame):

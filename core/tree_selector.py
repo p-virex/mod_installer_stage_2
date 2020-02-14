@@ -1,12 +1,13 @@
 import wx
-import wx.lib.agw.customtreectrl as CT
+import wx.lib.agw.customtreectrl
 
 
-class ThreeSelector(CT.CustomTreeCtrl):
+class ThreeSelector(wx.lib.agw.customtreectrl.CustomTreeCtrl):
     def __init__(self, parent):
-        CT.CustomTreeCtrl.__init__(self, parent)
+        wx.lib.agw.customtreectrl.CustomTreeCtrl.__init__(self, parent, agwStyle=wx.TR_HIDE_ROOT | wx.TR_MULTIPLE)
         myCursor = wx.Cursor(wx.CURSOR_HAND)
         self.SetCursor(myCursor)
+        self.SetBackgroundColour(wx.WHITE)
 
     def GetCheckedItems(self, itemParent=None, checkedItems=None):
         if itemParent is None:

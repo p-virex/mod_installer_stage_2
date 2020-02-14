@@ -4,7 +4,7 @@ from pprint import pprint
 import wx
 import wx.lib.agw.customtreectrl as CT
 
-from common.constants import MODS_CONFIG
+from common.constants import g_MODS_CONFIG
 
 
 class Popupwindow(wx.MiniFrame):
@@ -62,7 +62,7 @@ class MyFrame(wx.Frame):
         #     1 - A checkbox - like item
         #     2 - A radiobutton - type item
         start_pos = 40
-        for mods, info_mods in MODS_CONFIG.items():
+        for mods, info_mods in g_MODS_CONFIG.items():
             if isinstance(info_mods, list):
                 custom_tree.AppendItem(root, mods, ct_type=1)
                 self.position_list.append([mods, [start_pos, start_pos + 20]])
@@ -103,7 +103,6 @@ class MyFrame(wx.Frame):
                 start_pos = item[-1][0]
                 end_pos = item[-1][-1]
                 if all([relative_pos_y > start_pos, relative_pos_y < end_pos]):
-                    print(name, relative_pos_y)
                     if self.PW:
                         self.PW.Destroy()
                     self.PW = Popupwindow(relative_pos_x, relative_pos_y, self.info_mods_dict[name]['image'], self.info_mods_dict[name]['hint'])

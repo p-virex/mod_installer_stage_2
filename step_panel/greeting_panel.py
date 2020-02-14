@@ -1,6 +1,7 @@
 import wx
 
-from common.constants import MAIN_LOGO_600x500_PATH, SIZE_PANEL, BACK_BUTTON_PATH, NEXT_BUTTON_PATH
+from common.constants import SIZE_PANEL
+from common.path import MAIN_LOGO_600x500_PATH, BACK_BUTTON_PATH, NEXT_BUTTON_PATH
 from core.panel_template import TemplatePanel
 
 
@@ -11,10 +12,13 @@ class GreetingPanelUi(TemplatePanel):
 
         self.logo_image = wx.Bitmap(MAIN_LOGO_600x500_PATH)
 
-        bmp_back = wx.Image(BACK_BUTTON_PATH, wx.BITMAP_TYPE_BMP).ConvertToBitmap()
-        bmp_next = wx.Image(NEXT_BUTTON_PATH, wx.BITMAP_TYPE_BMP).ConvertToBitmap()
-        self.button_back = wx.BitmapButton(self, wx.ID_ANY, bmp_back)
-        self.button_next = wx.BitmapButton(self, wx.ID_ANY, bmp_next)
+        # bmp_back = wx.Image(BACK_BUTTON_PATH, wx.BITMAP_TYPE_BMP).ConvertToBitmap()
+        # bmp_next = wx.Image(NEXT_BUTTON_PATH, wx.BITMAP_TYPE_BMP).ConvertToBitmap()
+        # self.button_back = wx.BitmapButton(self, wx.ID_ANY, bmp_back)
+        # self.button_next = wx.BitmapButton(self, wx.ID_ANY, bmp_next)
+
+        self.button_back = wx.Button(self, wx.ID_ANY, 'Exit')
+        self.button_next = wx.Button(self, wx.ID_ANY, 'Next')
 
         self.main_vertical_sizer = wx.BoxSizer(wx.VERTICAL)
         self.button_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -22,6 +26,7 @@ class GreetingPanelUi(TemplatePanel):
         self.button_sizer.Add(self.button_next, 1, wx.ALL | wx.EXPAND | wx.RIGHT, 5)
 
         self.main_vertical_sizer.Add(wx.StaticBitmap(self, wx.ID_ANY, self.logo_image), 0, wx.ALL | wx.EXPAND, 0)
+        self.main_vertical_sizer.Add((1, 1), 1, wx.ALL | wx.EXPAND, 0)
         self.main_vertical_sizer.Add(self.button_sizer, 0, wx.ALL | wx.CENTRE, 5)
         self.SetSizer(self.main_vertical_sizer)
         self.Show()

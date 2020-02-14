@@ -3,6 +3,7 @@ from collections import OrderedDict
 import wx
 
 from core.frame import ModsFrame
+from step_panel.choice_approved_panel import ChoiceApprovedPanelUi
 from step_panel.greeting_panel import GreetingPanelUi
 from step_panel.search_game_panel import SearchGamePanelUi
 from step_panel.select_mods_panel import SelectModsPanelUi
@@ -10,7 +11,8 @@ from step_panel.select_mods_panel import SelectModsPanelUi
 PANEL_INFO = OrderedDict({
     'greeting': GreetingPanelUi,
     'search_game': SearchGamePanelUi,
-    'select_mods': SelectModsPanelUi
+    'select_mods': SelectModsPanelUi,
+    'approved_mods': ChoiceApprovedPanelUi
 })
 
 
