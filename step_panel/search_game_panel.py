@@ -19,11 +19,11 @@ class SearchGamePanelUi(TemplatePanel):
         # self.button_next = wx.BitmapButton(self, wx.ID_ANY, bmp_next)
         self.game_path = wx.Choice(self, wx.ID_ANY, choices=[])
         self.button_manual = wx.Button(self, wx.ID_ANY, 'Обзор')
-        self.button_back = wx.Button(self, wx.ID_ANY, 'Back')
-        self.button_next = wx.Button(self, wx.ID_ANY, 'Next')
+        self.button_back = wx.Button(self, wx.ID_ANY, 'Назад')
+        self.button_next = wx.Button(self, wx.ID_ANY, 'Далее')
 
         static_text = wx.StaticText(self, wx.ID_ANY,
-                                    'Для продолжения утсановки выберите путь до папки с игрой или нажмите Далее')
+                                    'Для продолжения установки выберите путь до папки с игрой или нажмите Далее')
 
         self.main_vertical_sizer = wx.BoxSizer(wx.VERTICAL)
         self.button_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -37,8 +37,8 @@ class SearchGamePanelUi(TemplatePanel):
         self.main_vertical_sizer.Add(wx.StaticBitmap(self, wx.ID_ANY, self.logo_image), 0, wx.ALL | wx.EXPAND, 0)
         self.main_vertical_sizer.Add(self.text_sizer, 0, wx.ALL | wx.EXPAND, 5)
         self.main_vertical_sizer.Add(self.path_sizer, 0, wx.ALL | wx.EXPAND | wx.CENTRE, 5)
-        self.main_vertical_sizer.Add((1, 1), 1, wx.ALL | wx.EXPAND | wx.CENTRE, 5)
-        self.main_vertical_sizer.Add(self.button_sizer, 0, wx.ALL | wx.CENTRE, 5)
+        self.main_vertical_sizer.Add((0, 0), 1, wx.ALL | wx.EXPAND | wx.CENTRE, 5)
+        self.main_vertical_sizer.Add(self.button_sizer, 0, wx.ALL | wx.CENTRE | wx.DOWN, 5)
         self.SetSizer(self.main_vertical_sizer)
         self.Fit()
         self.Hide()

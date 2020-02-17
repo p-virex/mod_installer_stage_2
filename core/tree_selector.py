@@ -4,7 +4,8 @@ import wx.lib.agw.customtreectrl
 
 class ThreeSelector(wx.lib.agw.customtreectrl.CustomTreeCtrl):
     def __init__(self, parent):
-        wx.lib.agw.customtreectrl.CustomTreeCtrl.__init__(self, parent, agwStyle=wx.TR_HIDE_ROOT | wx.TR_MULTIPLE)
+        frame_styles = wx.TR_HIDE_ROOT | wx.TR_MULTIPLE | wx.TR_LINES_AT_ROOT
+        wx.lib.agw.customtreectrl.CustomTreeCtrl.__init__(self, parent, agwStyle=frame_styles)
         myCursor = wx.Cursor(wx.CURSOR_HAND)
         self.SetCursor(myCursor)
         self.SetBackgroundColour(wx.WHITE)

@@ -1,10 +1,13 @@
+import time
+
 import wx
 
 from common.constants import SIZE_PANEL, g_MODS_CONFIG, STREAM_NAMES, g_STREAM_SETTINGS
-from common.path import MAIN_LOGO_600x100_PATH, BACK_BUTTON_PATH, NEXT_BUTTON_PATH
+from common.path import MAIN_LOGO_600x100_PATH
 from core.panel_template import TemplatePanel
 from core.tooltip import Tooltip
 from core.tree_selector import ThreeSelector
+import wx.lib.agw.customtreectrl as CT
 
 
 class SelectModsPanelUi(TemplatePanel):
@@ -20,9 +23,9 @@ class SelectModsPanelUi(TemplatePanel):
         self.button_sizer = wx.BoxSizer(wx.HORIZONTAL)
         # self.button_back = wx.BitmapButton(self, wx.ID_ANY, self.get_convert_bitmap(BACK_BUTTON_PATH))
         # self.button_next = wx.BitmapButton(self, wx.ID_ANY, self.get_convert_bitmap(NEXT_BUTTON_PATH))
-        self.button_back = wx.Button(self, wx.ID_ANY, 'Back')
-        self.button_next = wx.Button(self, wx.ID_ANY, 'Next')
-
+        self.button_back = wx.Button(self, wx.ID_ANY, 'Назад')
+        self.button_next = wx.Button(self, wx.ID_ANY, 'Далее')
+        self.button_next.Disable()
         self.mods_panel = ThreeSelector(self)
         self.choice_stream_settings = wx.Choice(self, wx.ID_ANY, choices=STREAM_NAMES)
         self.choice_stream_settings.SetSelection(0)
@@ -31,7 +34,7 @@ class SelectModsPanelUi(TemplatePanel):
         self.main_vertical_sizer.Add(self.get_static_bitmap(MAIN_LOGO_600x100_PATH), 0, wx.ALL | wx.EXPAND, 0)
         self.main_vertical_sizer.Add(self.choice_stream_settings, 0, wx.ALL | wx.EXPAND, 5)
         self.main_vertical_sizer.Add(self.mods_panel, 1, wx.ALL | wx.EXPAND, 5)
-        self.main_vertical_sizer.Add(self.button_sizer, 0, wx.CENTRE, 10)
+        self.main_vertical_sizer.Add(self.button_sizer, 0, wx.CENTRE, 20)
 
         self.SetSizer(self.main_vertical_sizer)
         self.Hide()
@@ -45,30 +48,11 @@ class SelectModsPanelUi(TemplatePanel):
         self.button_next.Bind(wx.EVT_BUTTON, self.event_next_step)
         self.button_back.Bind(wx.EVT_BUTTON, self.event_prev_step)
         self.choice_stream_settings.Bind(wx.EVT_CHOICE, self.event_select_streamer)
+        self.mods_panel.Bind(CT.EVT_TREE_ITEM_CHECKED, self.event_enable_button)
 
     def fill_three(self):
-        """
-        [name_mods, [start_pos, end_pos]]
-        [['pric 1', [19, 38]],
-        ['pric 2', [38, 57]],
-        ['pric 3', [57, 76]],
-        ['Удобный мод на каждый день', [76, 95]],
-        ['Прикольный мод', [95, 114]],
-        ['Мне надоело придумывать', [114, 133]],
-        ['А можно вот  так 1', [152, 171]],
-        ['мод2 2', [171, 190]],
-        ['Мод 3', [190, 209]],
-        ['Очень много модов?', [209, 228]],
-        ['Да хоть миллион!', [228, 247]],
-        ['Да хоть два!!!', [247, 266]],
-        ['Даже не почувствовал', [266, 285]],
-        ['Короче, я адаптивная панель, влезет сколько надо', [285, 304]],
-        ['Короче, я адаптивная панель, влезет сколько надо2', [304, 323]],
-        ['Короче, я адаптивная панель, влезет сколько надо3', [323, 342]],
-        ['Короче, я адаптивная панель, влезет сколько надо4', [342, 361]]]
-        """
         start_pos, shift_pixel = 0, 19
-        root = self.mods_panel.AddRoot("Mods selected")
+        root = self.mods_panel.AddRoot('')
         name_streamer = self.choice_stream_settings.GetStringSelection()
         for name_mod, info_mods in g_MODS_CONFIG.items():
             if isinstance(info_mods, list):
@@ -102,13 +86,16 @@ class SelectModsPanelUi(TemplatePanel):
             if name not in g_STREAM_SETTINGS.get(name_streamer):
                 continue
             self.mods_panel.SetItem3StateValue(item, True)
+        event.Skip()
 
     def drop_select(self):
         for item in self.item_three_dict.values():
             self.mods_panel.CheckItem(item, False)
 
     def show_tooltip_om_mouse_move(self, event):
-        # todo доделать поправку координат с учетом сдивга скролла
+        # todo доделать поправку координат с учетом сдвига скролла
+        # todo убрать тултип в случае наведении
+        #  курсора в область без тултипа
         # print(self.mods_panel.GetScrollPos(wx.VERTICAL))
         pos_child_panel = self.ScreenToClient(event.GetPosition())
         parent_panel_pos = self.GetScreenPosition()
@@ -133,6 +120,14 @@ class SelectModsPanelUi(TemplatePanel):
         # destroy the popup window on leaving the red panel
         if self.tooltip:
             self.tooltip.Destroy()
+        event.Skip()
+
+    def event_enable_button(self, event):
+        if self.mods_panel.GetCheckedItems():
+            self.button_next.Enable()
+        else:
+            self.button_next.Disable()
+        event.Skip()
 
     def event_checked_select(self, event):
         self.selected_mods_list = list()
@@ -143,3 +138,4 @@ class SelectModsPanelUi(TemplatePanel):
             self.selected_mods_list.append(item.GetText())
             approved_mods_panel.select_mod_ctrl.AppendText(item.GetText() + '\n')
         print(self.selected_mods_list)
+        event.Skip()
