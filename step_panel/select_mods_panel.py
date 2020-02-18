@@ -1,8 +1,6 @@
-import time
-
 import wx
 
-from common.constants import SIZE_PANEL, g_MODS_CONFIG, STREAM_NAMES, g_STREAM_SETTINGS
+from common.constants import SIZE_PANEL, g_MODS_CONFIG, STREAM_NAMES, g_PRESET_SETTINGS
 from common.path import MAIN_LOGO_600x100_PATH
 from core.panel_template import TemplatePanel
 from core.tooltip import Tooltip
@@ -47,13 +45,14 @@ class SelectModsPanelUi(TemplatePanel):
         self.button_next.Bind(wx.EVT_BUTTON, self.event_checked_select)
         self.button_next.Bind(wx.EVT_BUTTON, self.event_next_step)
         self.button_back.Bind(wx.EVT_BUTTON, self.event_prev_step)
-        self.choice_stream_settings.Bind(wx.EVT_CHOICE, self.event_select_streamer)
+        self.choice_stream_settings.Bind(wx.EVT_CHOICE, self.event_select_preset)
         self.mods_panel.Bind(CT.EVT_TREE_ITEM_CHECKED, self.event_enable_button)
+        self.enable_button()
 
     def fill_three(self):
         start_pos, self.shift_pixel = 0, 19
         root = self.mods_panel.AddRoot('')
-        name_streamer = self.choice_stream_settings.GetStringSelection()
+        select_preset = self.choice_stream_settings.GetStringSelection()
         for name_mod, info_mods in g_MODS_CONFIG.items():
             if isinstance(info_mods, list):
                 item = self.mods_panel.AppendItem(root, name_mod, ct_type=1)
@@ -61,7 +60,7 @@ class SelectModsPanelUi(TemplatePanel):
                 self.info_mods_dict.update({name_mod: {'image': info_mods[0], 'hint': info_mods[-1]}})
                 self.item_three_dict.update({name_mod: item})
                 start_pos += self.shift_pixel
-                if name_mod in g_STREAM_SETTINGS.get(name_streamer):
+                if name_mod in g_PRESET_SETTINGS.get(select_preset):
                     self.mods_panel.SetItem3StateValue(item, True)
             if isinstance(info_mods, dict):
                 group = self.mods_panel.AppendItem(root, name_mod)
@@ -75,17 +74,18 @@ class SelectModsPanelUi(TemplatePanel):
                     self.info_mods_dict.update({name_mod_: {'image': info[0], 'hint': info[-1]}})
                     self.item_three_dict.update({name_mod_: item})
                     start_pos += self.shift_pixel
-                    if name_mod_ in g_STREAM_SETTINGS.get(name_streamer):
+                    if name_mod_ in g_PRESET_SETTINGS.get(select_preset):
                         self.mods_panel.SetItem3StateValue(item, True)
         self.mods_panel.ExpandAll()
 
-    def event_select_streamer(self, event):
+    def event_select_preset(self, event):
         self.drop_select()
         name_streamer = self.choice_stream_settings.GetStringSelection()
         for name, item in self.item_three_dict.items():
-            if name not in g_STREAM_SETTINGS.get(name_streamer):
+            if name not in g_PRESET_SETTINGS.get(name_streamer):
                 continue
             self.mods_panel.SetItem3StateValue(item, True)
+        self.enable_button()
         event.Skip()
 
     def drop_select(self):
@@ -119,11 +119,14 @@ class SelectModsPanelUi(TemplatePanel):
         event.Skip()
 
     def event_enable_button(self, event):
+        self.enable_button()
+        event.Skip()
+
+    def enable_button(self):
         if self.mods_panel.GetCheckedItems():
             self.button_next.Enable()
         else:
             self.button_next.Disable()
-        event.Skip()
 
     def event_checked_select(self, event):
         self.selected_mods_list = list()

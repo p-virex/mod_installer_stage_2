@@ -108,6 +108,23 @@
     "izeberg.modsettingsapi_1.3.0.wotmod",
     "Izeberg setting API"
   ],
+  "Radio button Demo": {
+    "Value 1": [
+      "download.jpg",
+      "izeberg.modsettingsapi_1.3.0.wotmod",
+      "Value 1"
+    ],
+    "Value 2": [
+      "download.jpg",
+      "izeberg.modsettingsapi_1.3.0.wotmod",
+      "Value 2"
+    ],
+    "Value 3": [
+      "download.jpg",
+      "izeberg.modsettingsapi_1.3.0.wotmod",
+      "Value 3"
+    ]
+  },
   "Реплей менеджер": [
     "download.jpg",
     "net.wargaming.replaysmanager_3.4.4.wotmod",

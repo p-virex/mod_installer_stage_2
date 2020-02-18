@@ -16,8 +16,6 @@ FRAME_STYLE = wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL | wx.BORDER
 
 g_MODS_CONFIG = json.load(open(os.path.join(os.getcwd(), 'common', 'mods_config.json'), encoding='utf-8'))
 
-STREAM_NAMES = ['Левша', 'Кортавый']
+g_PRESET_SETTINGS = json.load(open(os.path.join(os.getcwd(), 'common', 'stream_settings.json'), encoding='utf-8'))
 
-g_STREAM_SETTINGS = json.load(open(os.path.join(os.getcwd(), 'common', 'stream_settings.json'), encoding='utf-8'))
-
-
+STREAM_NAMES = list(g_PRESET_SETTINGS.keys())
