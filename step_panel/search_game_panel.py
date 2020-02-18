@@ -4,7 +4,7 @@ import xml.etree.cElementTree as et
 import wx
 
 from common.constants import SIZE_PANEL, VERSION_CLIENT
-from common.path import MAIN_LOGO_600x100_PATH, NEXT_BUTTON_PATH, BACK_BUTTON_PATH, WGC_DEFAULT_PATH
+from common.path import MAIN_LOGO_600x100_PATH, WGC_DEFAULT_PATH
 from core.panel_template import TemplatePanel
 
 

@@ -24,5 +24,5 @@ class Tooltip(wx.MiniFrame):
         self.main_vertsizer.Add(txt)
         self.SetSizer(self.main_vertsizer)
         self.Fit()
-        time.sleep(0.1)
+        time.sleep(0.3)
         self.Show()

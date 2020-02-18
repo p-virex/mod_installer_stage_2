@@ -51,30 +51,30 @@ class SelectModsPanelUi(TemplatePanel):
         self.mods_panel.Bind(CT.EVT_TREE_ITEM_CHECKED, self.event_enable_button)
 
     def fill_three(self):
-        start_pos, shift_pixel = 0, 19
+        start_pos, self.shift_pixel = 0, 19
         root = self.mods_panel.AddRoot('')
         name_streamer = self.choice_stream_settings.GetStringSelection()
         for name_mod, info_mods in g_MODS_CONFIG.items():
             if isinstance(info_mods, list):
                 item = self.mods_panel.AppendItem(root, name_mod, ct_type=1)
-                self.position_list.append([name_mod, [start_pos, start_pos + shift_pixel]])
+                self.position_list.append([name_mod, [start_pos, start_pos + self.shift_pixel]])
                 self.info_mods_dict.update({name_mod: {'image': info_mods[0], 'hint': info_mods[-1]}})
                 self.item_three_dict.update({name_mod: item})
-                start_pos += shift_pixel
+                start_pos += self.shift_pixel
                 if name_mod in g_STREAM_SETTINGS.get(name_streamer):
                     self.mods_panel.SetItem3StateValue(item, True)
             if isinstance(info_mods, dict):
                 group = self.mods_panel.AppendItem(root, name_mod)
                 check_box = 1 if info_mods.get('checkBox') else 2
-                start_pos += shift_pixel
+                start_pos += self.shift_pixel
                 for name_mod_, info in info_mods.items():
                     if name_mod_ in ('checkBox',):
                         continue
                     item = self.mods_panel.AppendItem(group, name_mod_, ct_type=check_box)
-                    self.position_list.append([name_mod_, [start_pos, start_pos + shift_pixel]])
+                    self.position_list.append([name_mod_, [start_pos, start_pos + self.shift_pixel]])
                     self.info_mods_dict.update({name_mod_: {'image': info[0], 'hint': info[-1]}})
                     self.item_three_dict.update({name_mod_: item})
-                    start_pos += shift_pixel
+                    start_pos += self.shift_pixel
                     if name_mod_ in g_STREAM_SETTINGS.get(name_streamer):
                         self.mods_panel.SetItem3StateValue(item, True)
         self.mods_panel.ExpandAll()
@@ -93,23 +93,19 @@ class SelectModsPanelUi(TemplatePanel):
             self.mods_panel.CheckItem(item, False)
 
     def show_tooltip_om_mouse_move(self, event):
-        # todo доделать поправку координат с учетом сдвига скролла
-        # todo убрать тултип в случае наведении
-        #  курсора в область без тултипа
-        # print(self.mods_panel.GetScrollPos(wx.VERTICAL))
+        scroll_pos = self.mods_panel.GetScrollPos(wx.VERTICAL)
         pos_child_panel = self.ScreenToClient(event.GetPosition())
         parent_panel_pos = self.GetScreenPosition()
         relative_pos_x = pos_child_panel[0] + parent_panel_pos[0]
-        relative_pos_y = pos_child_panel[1] + parent_panel_pos[1]
+        relative_pos_y = pos_child_panel[1] + parent_panel_pos[1] + (scroll_pos * 10)
         frame_y, frame_x = self.frame.GetPosition()
-        if all([relative_pos_y > 19, relative_pos_x > 30, relative_pos_x < 200]):
+        if all([relative_pos_y > self.shift_pixel, relative_pos_x > 45, relative_pos_x < 200]):
             for item in self.position_list:
                 path_image, hint = self.info_mods_dict[item[0]]['image'], self.info_mods_dict[item[0]]['hint']
                 start_pos, end_pos = item[-1]
                 if all([relative_pos_y > start_pos, relative_pos_y < end_pos]):
                     if self.tooltip:
                         self.tooltip.Destroy()
-                    # todo убрать имя, вернуть hint!
                     self.tooltip = Tooltip(frame_y, frame_x, path_image, hint)
                     break
         else:
@@ -137,5 +133,4 @@ class SelectModsPanelUi(TemplatePanel):
         for item in checked_items:
             self.selected_mods_list.append(item.GetText())
             approved_mods_panel.select_mod_ctrl.AppendText(item.GetText() + '\n')
-        print(self.selected_mods_list)
         event.Skip()

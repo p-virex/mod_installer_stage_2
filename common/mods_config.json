@@ -4,12 +4,12 @@
     "Расширенные маркеры техники": [
       null,
       "protanki/advancedVehicleMarkers.wotmod",
-      null
+      "Расширенные маркеры техники"
     ],
     "Стратегический прицел": [
       "download3.jpg",
       "protanki/crosshair_strategic.wotmod",
-      null
+      "Стратегический прицел"
     ],
     "Панель урона ProTanki": [
       null,
@@ -24,12 +24,12 @@
     "Sight mod": [
       "download3.jpg",
       "protanki/tv.protanki.sights.wotmod",
-      "Best prycel"
+      "Sight mod"
     ],
     "Spotted ProTanki": [
       "download3.jpg",
       "protanki/tv.protanki.spotted_1.6.wotmod",
-      "Best prycel"
+      "Spotted ProTanki"
     ],
     "Убрать дым от трупов": [
       "download.jpg",
@@ -39,17 +39,17 @@
     "Отключить облака": [
       "download3.jpg",
       "protanki/tweakerClouds.wotmod",
-      "Best prycel"
+      "Отключить облака"
     ],
     "Графические настройки": [
       "download3.jpg",
       "protanki/tweakerGraphicsSettings.wotmod",
-      "Best prycel"
+      "Графические настройки"
     ],
     "Отключить туман": [
       null,
       "protanki/tweakerSkyFog.wotmod",
-      "Best prycel"
+      "Отключить туман"
     ]
   },
   "Моды от Spoter": {
@@ -57,27 +57,27 @@
     "Discord ангар": [
       "download3.jpg",
       "spoter/spoter.discordHangar_1.01.wotmod",
-      "Best prycel"
+      "Discord ангар"
     ],
     "Процент отметок на стволе": [
       "download3.jpg",
       "spoter/spoter.marksOnGunExtended_8.06.wotmod",
-      "Best prycel"
+      "Процент отметок на стволе"
     ],
     "Персональные миссии": [
       "download3.jpg",
       "spoter/spoter.mod_personalMissionColored_1.04.wotmod",
-      "Best prycel"
+      "Персональные миссии"
     ],
     "Какие-то тултипы": [
       "download3.jpg",
       "spoter/spoter.mod_tooltipsCountItemsLimitExtend_1.02.wotmod",
-      "Best prycel"
+      "Какие-то тултипы"
     ],
     "Расширенное что-то там": [
       "download3.jpg",
       "spoter/spoter.spotted_extended_light_4.07.wotmod",
-      "Best prycel"
+      "Расширенное что-то там"
     ]
   },
   "PY mods": {
@@ -85,32 +85,82 @@
     "PlayerPanelsAPI": [
       "download3.jpg",
       "PYmods/PlayerPanelsAPI.wotmod",
-      null
+      "PlayerPanelsAPI"
     ],
     "PlayersPanelHP": [
       "download3.jpg",
       "PYmods/PlayersPanelHP.wotmod",
-      null
+      "PlayersPanelHP"
     ],
     "PYModsCore": [
       "download3.jpg",
       "PYmods/PYmodsCore.wotmod",
-      null
+      "PYModsCore"
     ]
   },
   "Gambiter GUI Flash": [
     "download.jpg",
     "gambiter.guiflash_0.3.1.wotmod",
-    "Best prycel"
+    "Gambiter GUI Flash"
   ],
   "Izeberg setting API": [
     "download.jpg",
     "izeberg.modsettingsapi_1.3.0.wotmod",
-    "Best prycel"
+    "Izeberg setting API"
   ],
   "Реплей менеджер": [
     "download.jpg",
     "net.wargaming.replaysmanager_3.4.4.wotmod",
-    "Best prycel"
+    "Реалей менеджер!!"
+  ],
+  "Демо 1": [
+    "download.jpg",
+    "net.wargaming.replaysmanager_3.4.4.wotmod",
+    "Демо 1"
+  ],
+  "Демо 2": [
+    "download.jpg",
+    "net.wargaming.replaysmanager_3.4.4.wotmod",
+    "Демо 2"
+  ],
+  "Демо 3": [
+    "download.jpg",
+    "net.wargaming.replaysmanager_3.4.4.wotmod",
+    "Демо 3"
+  ],
+  "Демо 4": [
+    "download.jpg",
+    "net.wargaming.replaysmanager_3.4.4.wotmod",
+    "Демо 4"
+  ],
+  "Демо 5": [
+    "download.jpg",
+    "net.wargaming.replaysmanager_3.4.4.wotmod",
+    "Демо 5"
+  ],
+  "Демо 6": [
+    "download.jpg",
+    "net.wargaming.replaysmanager_3.4.4.wotmod",
+    "Демо 6"
+  ],
+  "Демо 7": [
+    "download.jpg",
+    "net.wargaming.replaysmanager_3.4.4.wotmod",
+    "Демо 7"
+  ],
+  "Демо 8": [
+    "download.jpg",
+    "net.wargaming.replaysmanager_3.4.4.wotmod",
+    "Демо 8"
+  ],
+  "Демо 9": [
+    "download.jpg",
+    "net.wargaming.replaysmanager_3.4.4.wotmod",
+    "Демо 9"
+  ],
+  "Демо 11": [
+    "download.jpg",
+    "net.wargaming.replaysmanager_3.4.4.wotmod",
+    "Демо 11"
   ]
 }
