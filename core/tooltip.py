@@ -2,6 +2,7 @@ import time
 
 import wx
 
+from common.common_utils import resource_path
 from common.path import NOT_PATH_DEFAULT
 
 
@@ -10,7 +11,7 @@ class Tooltip(wx.MiniFrame):
     def __init__(self, mx, my, image_path, description_mod):
         if not image_path:
             image_path = NOT_PATH_DEFAULT
-        image = wx.Image(image_path, wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+        image = wx.Image(resource_path(image_path), wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
         wight_image = image.GetWidth()
         height_image = image.GetHeight()
         wx.MiniFrame.__init__(self, None, -1, pos=(mx - height_image + 700, my + 100), size=wx.Size(wight_image, height_image), style=wx.MINIMIZE_BOX)

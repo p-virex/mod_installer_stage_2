@@ -1,12 +1,24 @@
+import gettext
+import os
+
 import wx
+
+from common.common_utils import resource_path
 
 
 class TemplatePanel(wx.Panel):
     def __init__(self, parent, panel_name):
         super(TemplatePanel, self).__init__(parent)
+        self.set_language()
         self.frame = parent
         self.panel_name = panel_name
         self.Hide()
+
+    @staticmethod
+    def set_language():
+        os.environ["LANGUAGE"] = "{}.UTF-8".format('RU')
+        gettext.bindtextdomain('{}'.format('RU').lower(), resource_path('locales'))
+        gettext.textdomain('{}'.format('RU').lower())
 
     def event_next_step(self, event):
         current_panel_ind = self.frame.panel_ind.get(self.panel_name)
@@ -33,3 +45,7 @@ class TemplatePanel(wx.Panel):
 
     def get_static_bitmap(self, path_image):
         return wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(path_image))
+
+    @staticmethod
+    def get_text(key):
+        return gettext.gettext(key)

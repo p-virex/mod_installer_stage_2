@@ -1,5 +1,9 @@
+import gettext
+import os
+
 import wx
 
+from common.common_utils import resource_path
 from common.constants import TITLE, SIZE_FRAME, FRAME_STYLE
 from common.path import ICON_PATH
 

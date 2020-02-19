@@ -13,17 +13,12 @@ class SearchGamePanelUi(TemplatePanel):
         super(SearchGamePanelUi, self).__init__(parent, panel_name)
         self.SetSizeHints(minSize=SIZE_PANEL, maxSize=SIZE_PANEL)
         self.logo_image = wx.Bitmap(MAIN_LOGO_600x100_PATH)
-        # bmp_back = wx.Image(BACK_BUTTON_PATH, wx.BITMAP_TYPE_BMP).ConvertToBitmap()
-        # bmp_next = wx.Image(NEXT_BUTTON_PATH, wx.BITMAP_TYPE_BMP).ConvertToBitmap()
-        # self.button_back = wx.BitmapButton(self, wx.ID_ANY, bmp_back)
-        # self.button_next = wx.BitmapButton(self, wx.ID_ANY, bmp_next)
         self.game_path = wx.Choice(self, wx.ID_ANY, choices=[])
-        self.button_manual = wx.Button(self, wx.ID_ANY, 'Обзор')
-        self.button_back = wx.Button(self, wx.ID_ANY, 'Назад')
-        self.button_next = wx.Button(self, wx.ID_ANY, 'Далее')
+        self.button_manual = wx.Button(self, wx.ID_ANY, 'overview_button')
+        self.button_back = wx.Button(self, wx.ID_ANY, self.get_text('back_button'))
+        self.button_next = wx.Button(self, wx.ID_ANY, self.get_text('next_button'))
 
-        static_text = wx.StaticText(self, wx.ID_ANY,
-                                    'Для продолжения установки выберите путь до папки с игрой или нажмите Далее')
+        static_text = wx.StaticText(self, wx.ID_ANY, self.get_text('select_path_game'))
 
         self.main_vertical_sizer = wx.BoxSizer(wx.VERTICAL)
         self.button_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -37,8 +32,8 @@ class SearchGamePanelUi(TemplatePanel):
         self.main_vertical_sizer.Add(wx.StaticBitmap(self, wx.ID_ANY, self.logo_image), 0, wx.ALL | wx.EXPAND, 0)
         self.main_vertical_sizer.Add(self.text_sizer, 0, wx.ALL | wx.EXPAND, 5)
         self.main_vertical_sizer.Add(self.path_sizer, 0, wx.ALL | wx.EXPAND | wx.CENTRE, 5)
-        self.main_vertical_sizer.Add((0, 0), 1, wx.ALL | wx.EXPAND | wx.CENTRE, 5)
-        self.main_vertical_sizer.Add(self.button_sizer, 0, wx.ALL | wx.CENTRE | wx.DOWN, 5)
+        self.main_vertical_sizer.Add((0, 0), 1, wx.ALL | wx.EXPAND, 5)
+        self.main_vertical_sizer.Add(self.button_sizer, 0, wx.CENTRE, 5)
         self.SetSizer(self.main_vertical_sizer)
         self.Fit()
         self.Hide()
@@ -52,7 +47,7 @@ class SearchGamePanelUi(TemplatePanel):
         """
         Show the DirDialog and print the user's choice to stdout
         """
-        dlg = wx.DirDialog(self, "Choose a directory:", style=wx.DD_DEFAULT_STYLE |
+        dlg = wx.DirDialog(self, self.get_text('select_dir'), style=wx.DD_DEFAULT_STYLE |
                                                               wx.DD_DIR_MUST_EXIST |
                                                               wx.DD_CHANGE_DIR)
         if dlg.ShowModal() == wx.ID_OK:
@@ -60,7 +55,7 @@ class SearchGamePanelUi(TemplatePanel):
                 self.game_path.Append(dlg.GetPath())
                 self.game_path.SetSelection(int(self.game_path.GetCount()) - 1)
             else:
-                wx.MessageBox('По указанному пути игровой клиент не найден')
+                wx.MessageBox(self.get_text('game_not_found'))
         dlg.Destroy()
 
     def search_path_game(self):

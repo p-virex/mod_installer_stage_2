@@ -1,0 +1,57 @@
+# Файл перевода текстовых сообщений.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Mods install\n"
+"POT-Creation-Date: 2020-02-10 10:00+0300\n"
+"PO-Revision-Date: 2020-02-10 10:00+0300\n"
+"Last-Translator: Mods install"
+"Language-Team: Mods install <>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "exit_button"
+msgstr "Выход"
+
+msgid "next_button"
+msgstr "Далее"
+
+msgid "greeting"
+msgstr "Вас приветствует программа установки модификаций Sharewax. Здесь собраны лучшие\nмодификации специально для Вас. Для продолжения работа, нажмите кнопку Далее или кнопку\nВыход для выхода из программы установки"
+
+msgid "select_path_game"
+msgstr "Для продолжения установки выберите путь до папки с игрой или нажмите Далее"
+
+msgid "back_button"
+msgstr "Назад"
+
+msgid "overview_button"
+msgstr "Обзор"
+
+msgid "select_dir"
+msgstr "Выберите папку"
+
+msgid "game_not_found"
+msgstr "По указанному пути игровой клиент не найден"
+
+msgid "choice_approved"
+msgstr "Были выбраны следующие модификации для установки, для продолжения нажмите Далее"
+
+msgid "mods_del_cache"
+msgstr "Удалить кеш модификаций"
+
+msgid "game_del_cache"
+msgstr "Удалить кеш игры"
+
+msgid "backup_mods"
+msgstr "Сделать копию установленных модификаций"
+
+msgid "fine"
+msgstr "Установить хорошее настроение и победные бои"
+
+msgid "install_mods"
+msgstr "Не закрывайте программу, дождитесь окончания установки выбранных модификаций."
+
+msgid "preparing"
+msgstr "Установите дополнительные опции если требуется и нажмите Далее"

@@ -21,8 +21,8 @@ class SelectModsPanelUi(TemplatePanel):
         self.button_sizer = wx.BoxSizer(wx.HORIZONTAL)
         # self.button_back = wx.BitmapButton(self, wx.ID_ANY, self.get_convert_bitmap(BACK_BUTTON_PATH))
         # self.button_next = wx.BitmapButton(self, wx.ID_ANY, self.get_convert_bitmap(NEXT_BUTTON_PATH))
-        self.button_back = wx.Button(self, wx.ID_ANY, 'Назад')
-        self.button_next = wx.Button(self, wx.ID_ANY, 'Далее')
+        self.button_back = wx.Button(self, wx.ID_ANY, self.get_text('back_button'))
+        self.button_next = wx.Button(self, wx.ID_ANY, self.get_text('next_button'))
         self.button_next.Disable()
         self.mods_panel = ThreeSelector(self)
         self.choice_stream_settings = wx.Choice(self, wx.ID_ANY, choices=STREAM_NAMES)
@@ -113,7 +113,7 @@ class SelectModsPanelUi(TemplatePanel):
                 self.tooltip.Destroy()
 
     def event_leave_mouse_panel(self, event):
-        # destroy the popup window on leaving the red panel
+        # destroy the popup window on leaving the mod panel
         if self.tooltip:
             self.tooltip.Destroy()
         event.Skip()
