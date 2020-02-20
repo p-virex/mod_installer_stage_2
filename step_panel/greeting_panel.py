@@ -1,8 +1,5 @@
-import gettext
-
 import wx
 
-from common.common_utils import resource_path
 from common.constants import SIZE_PANEL
 from common.path import MAIN_LOGO_600x500_PATH
 from core.panel_template import TemplatePanel

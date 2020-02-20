@@ -19,3 +19,8 @@ g_MODS_CONFIG = json.load(open(os.path.join(os.getcwd(), 'common', 'mods_config.
 g_PRESET_SETTINGS = json.load(open(os.path.join(os.getcwd(), 'common', 'stream_settings.json'), encoding='utf-8'))
 
 STREAM_NAMES = list(g_PRESET_SETTINGS.keys())
+
+
+DROP_GAME_FOLDER = ['battle_results', 'clan_cache', 'custom_data', 'veh_cmp_cache', 'dossier_cache', 'web_cache']
+
+DROP_XVM_FOLDER = ['xvm\\Hitlog', 'xvm\\cache', 'xvm\\custom_data', 'xvm\\statistics']

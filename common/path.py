@@ -11,3 +11,5 @@ BACK_BUTTON_PATH = resource_path('res_image\\back_button.bmp')
 WGC_DEFAULT_PATH = os.path.join(os.environ['PROGRAMDATA'], 'Wargaming.net', 'GameCenter', 'preferences.xml')
 
 NOT_PATH_DEFAULT = resource_path('res_image\\not_found.jpg')
+# путь до кеша игры
+PATH_TO_CACHE_WOT = os.path.join(os.environ['appdata'], 'Wargaming.net', 'WorldOfTanks')

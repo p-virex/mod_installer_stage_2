@@ -39,4 +39,9 @@ class PreparingClientPanelUi(TemplatePanel):
         self.Fit()
 
         self.button_next.Bind(wx.EVT_BUTTON, self.event_next_step)
+        self.button_next.Bind(wx.EVT_BUTTON, self.init_run_install)
         self.button_back.Bind(wx.EVT_BUTTON, self.event_prev_step)
+
+    def init_run_install(self, event):
+        self.frame.panel_init_dict['install'].run_install()
+        event.Skip()

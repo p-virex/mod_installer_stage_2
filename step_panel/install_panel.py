@@ -1,8 +1,14 @@
+import os
+import shutil
+import time
+
 import wx
 
-from common.constants import SIZE_PANEL
-from common.path import MAIN_LOGO_600x100_PATH
+from common.constants import SIZE_PANEL, DROP_XVM_FOLDER, DROP_GAME_FOLDER
+from common.path import MAIN_LOGO_600x100_PATH, PATH_TO_CACHE_WOT
+from core.worked_thread import WorkedThread
 from core.panel_template import TemplatePanel
+from step_panel.install_backend import InstallScenario
 
 
 class InstallPanelUi(TemplatePanel):
@@ -12,10 +18,11 @@ class InstallPanelUi(TemplatePanel):
         self.logo_image = wx.Bitmap(MAIN_LOGO_600x100_PATH)
         self.main_vertical_sizer = wx.BoxSizer(wx.VERTICAL)
         self.progress_bar = wx.Gauge(self, wx.ID_ANY, style=wx.GA_HORIZONTAL)
+        self.logging_window = wx.TextCtrl(self, wx.ID_ANY, style=wx.TE_MULTILINE | wx.TE_READONLY, size=(-1, 300))
         self.button_back = wx.Button(self, wx.ID_ANY, self.get_text('exit_button'))
         self.button_youtube = wx.Button(self, wx.ID_ANY, 'Youtube')
         self.button_donate = wx.Button(self, wx.ID_ANY, 'Donate')
-
+        self.event_list = list()
         static_text = wx.StaticText(self, wx.ID_ANY, self.get_text('install_mods'))
 
         button_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -26,12 +33,38 @@ class InstallPanelUi(TemplatePanel):
         button_sizer.Add(self.button_youtube, 1, wx.ALL | wx.EXPAND, 5)
         button_sizer.Add(self.button_back, 1, wx.ALL | wx.EXPAND, 5)
 
+        logging_sizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, ''), wx.HORIZONTAL)
+
+        logging_sizer.Add(self.logging_window, 1, wx.ALL | wx.EXPAND, 5)
+
         self.main_vertical_sizer.Add(wx.StaticBitmap(self, wx.ID_ANY, self.logo_image), 0, wx.ALL | wx.EXPAND, 0)
         self.main_vertical_sizer.Add(text_sizer, 0, wx.ALL | wx.EXPAND, 5)
         self.main_vertical_sizer.Add(self.progress_bar, 0, wx.ALL | wx.EXPAND, 5)
+        self.main_vertical_sizer.Add(logging_sizer, 0, wx.ALL | wx.EXPAND, 5)
         self.main_vertical_sizer.Add((0, 0), 1, wx.ALL | wx.EXPAND, 5)
         self.main_vertical_sizer.Add(button_sizer, 0, wx.CENTRE, 5)
         self.button_back.Disable()
         self.SetSizer(self.main_vertical_sizer)
         self.Fit()
         self.Hide()
+
+    def run_install(self):
+        mods_panel = self.frame.panel_init_dict['select_mods']
+        if not mods_panel.selected_mods_list:
+            self.logging_window.AppendText('Модификации для установки не выбраны' + '\n')
+            return
+        self.check_event()
+        self.event_list += mods_panel.selected_mods_list
+        self.progress_bar.SetRange(len(self.event_list))
+        WorkedThread(InstallScenario, frame=self.frame, install_panel=self, event_list=self.event_list)
+
+    def check_event(self):
+        pre_panel = self.frame.panel_init_dict['preparing_client']
+        if pre_panel.checkbox_del_mods_cache.GetValue():
+            self.event_list.append('del_mods_cache')
+        if pre_panel.checkbox_del_game_cache.GetValue():
+            self.event_list.append('del_game_cache')
+        if pre_panel.checkbox_backup.GetValue():
+            self.event_list.append('backup')
+
+
