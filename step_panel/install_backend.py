@@ -1,9 +1,10 @@
 import os
 import shutil
+import time
 import zipfile
 
 from common.common_utils import resource_path
-from common.constants import DROP_XVM_FOLDER, g_MODS_CONFIG, VERSION_CLIENT
+from common.constants import DROP_XVM_FOLDER, g_MODS_CONFIG, VERSION_CLIENT, DROP_GAME_FOLDER
 from common.path import PATH_TO_CACHE_WOT
 
 
@@ -22,18 +23,29 @@ class InstallScenario:
 
     def preparing_game(self):
         pre_panel = self.frame.panel_init_dict['preparing_client']
+
+        if pre_panel.checkbox_del_old_mods.GetValue():
+            client_path = self.frame.panel_init_dict['search_game'].game_path.GetStringSelection()
+            self.send_msg(self.install_panel.get_text('del_mods_install'))
+            mod_folder = os.path.join(client_path, 'mods', VERSION_CLIENT.lstrip('v.'))
+            self.remove_folders(os.path.join(client_path, 'mods'), [VERSION_CLIENT.lstrip('v.')])
+            if not os.path.exists(mod_folder):
+                os.mkdir(mod_folder)
+            self.update_progress_bar('del_mods')
+
         if pre_panel.checkbox_del_mods_cache.GetValue():
             self.send_msg(self.install_panel.get_text('install_del_game_cache'))
-            self.remove_folders(DROP_XVM_FOLDER)
+            self.remove_folders(PATH_TO_CACHE_WOT, DROP_XVM_FOLDER)
             self.update_progress_bar('del_mods_cache')
 
         if pre_panel.checkbox_del_game_cache.GetValue():
             self.send_msg(self.install_panel.get_text('install_del_cache'))
-            self.remove_folders(DROP_XVM_FOLDER)
+            self.remove_folders(PATH_TO_CACHE_WOT, DROP_GAME_FOLDER)
             self.update_progress_bar('del_game_cache')
 
         if pre_panel.checkbox_backup.GetValue():
-            self.send_msg(self.install_panel.get_text('create_backup'))
+            self.send_msg(self.install_panel.get_text('del_mods_install'))
+            self.create_backup()
             self.update_progress_bar('backup')
 
     def install_mods(self):
@@ -57,6 +69,21 @@ class InstallScenario:
         self.send_msg(self.install_panel.get_text('mods_installed') % client_path)
         self.install_panel.button_back.Enable()
 
+    def create_backup(self):
+        client_path = self.frame.panel_init_dict['search_game'].game_path.GetStringSelection()
+        mods_folder_path = os.path.join(client_path, 'mods', VERSION_CLIENT.lstrip('v.'))
+
+        backup_folder = client_path + os.sep + 'mods_backup'
+        if not os.path.exists(backup_folder):
+            os.mkdir(backup_folder)
+        path_to_zip = os.path.join(backup_folder, 'backup_mods_{}.zip'.format(VERSION_CLIENT))
+        zipp = zipfile.ZipFile(path_to_zip, mode='w')
+        for root, dirs, files in os.walk(mods_folder_path):
+            for file in files:
+                zipp.write(os.path.join(root, file))
+
+        zipp.close()
+
     def send_msg(self, msg):
         self.install_panel.logging_window.AppendText(msg + '\n')
 
@@ -65,9 +92,9 @@ class InstallScenario:
         self.install_panel.progress_bar.SetValue(self.pos_progress - len(self.event_progress_list))
 
     @staticmethod
-    def remove_folders(list_folders):
+    def remove_folders(path, list_folders):
         for folder in list_folders:
-            path_to_folder = os.path.join(PATH_TO_CACHE_WOT, folder)
+            path_to_folder = os.path.join(path, folder)
             if not os.path.isdir(path_to_folder):
                 continue
             shutil.rmtree(path_to_folder, ignore_errors=True)

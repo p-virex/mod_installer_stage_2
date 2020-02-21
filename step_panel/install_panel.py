@@ -66,6 +66,9 @@ class InstallPanelUi(TemplatePanel):
             self.event_list.append('del_game_cache')
         if pre_panel.checkbox_backup.GetValue():
             self.event_list.append('backup')
+        if pre_panel.checkbox_del_old_mods.GetValue():
+            self.event_list.append('del_mods')
+        print(self.event_list)
 
     def event_close(self, event):
         self.frame.Destroy()
