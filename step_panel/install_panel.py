@@ -1,11 +1,8 @@
-import os
-import shutil
-import time
-
 import wx
 
-from common.constants import SIZE_PANEL, DROP_XVM_FOLDER, DROP_GAME_FOLDER
-from common.path import MAIN_LOGO_600x100_PATH, PATH_TO_CACHE_WOT
+from common.common_utils import open_web_page
+from common.constants import SIZE_PANEL
+from common.path import MAIN_LOGO_600x100_PATH
 from core.worked_thread import WorkedThread
 from core.panel_template import TemplatePanel
 from step_panel.install_backend import InstallScenario
@@ -47,6 +44,9 @@ class InstallPanelUi(TemplatePanel):
         self.SetSizer(self.main_vertical_sizer)
         self.Fit()
         self.Hide()
+        self.button_back.Bind(wx.EVT_BUTTON, self.event_close)
+        self.button_donate.Bind(wx.EVT_BUTTON, self.event_donate)
+        self.button_youtube.Bind(wx.EVT_BUTTON, self.event_youtube)
 
     def run_install(self):
         mods_panel = self.frame.panel_init_dict['select_mods']
@@ -67,4 +67,14 @@ class InstallPanelUi(TemplatePanel):
         if pre_panel.checkbox_backup.GetValue():
             self.event_list.append('backup')
 
+    def event_close(self, event):
+        self.frame.Destroy()
+        event.Skip()
 
+    def event_donate(self, event):
+        open_web_page('https://unihelp.by/')
+        event.Skip()
+
+    def event_youtube(self, event):
+        open_web_page('https://www.youtube.com/user/WorldOfTanks')
+        event.Skip()

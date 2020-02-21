@@ -14,7 +14,7 @@ class SearchGamePanelUi(TemplatePanel):
         self.SetSizeHints(minSize=SIZE_PANEL, maxSize=SIZE_PANEL)
         self.logo_image = wx.Bitmap(MAIN_LOGO_600x100_PATH)
         self.game_path = wx.Choice(self, wx.ID_ANY, choices=[])
-        self.button_manual = wx.Button(self, wx.ID_ANY, 'overview_button')
+        self.button_manual = wx.Button(self, wx.ID_ANY, self.get_text('overview_button'))
         self.button_back = wx.Button(self, wx.ID_ANY, self.get_text('back_button'))
         self.button_next = wx.Button(self, wx.ID_ANY, self.get_text('next_button'))
 

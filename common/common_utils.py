@@ -1,6 +1,7 @@
 import os
 
 import sys
+import webbrowser
 
 EXCLUDE_REL_RES = ()
 
@@ -27,3 +28,7 @@ def resource_path(relative_path):
                 # sed to debug when starting source code
                 base_path = os.path.join(os.path.abspath("."), 'res')
     return os.path.join(base_path, relative_path)
+
+
+def open_web_page(path):
+    webbrowser.open(path)
