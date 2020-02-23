@@ -3,16 +3,17 @@ import os
 import sys
 import webbrowser
 
+from common.constants import g_PYTHON_START
+
 
 def resource_path(relative_path):
     """
-    The method returns root to the requested resource, based on the abstract path and element name.
-    :param relative_path: relative path resource
-    :return: join path to resource
+    Функция для получения пути к ресурсам, все не .py файлы обязаны храниться в директории res.
+    Такая зависимость обусловлена особенностями упаковки с помощью pyinstaller, т.к root меняется при запуске из .ехе
     """
-    try:
+    if not g_PYTHON_START:
         base_path = sys._MEIPASS
-    except Exception:
+    else:
         base_path = os.path.abspath(".")
     return os.path.join(base_path, 'res', relative_path)
 

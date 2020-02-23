@@ -1,7 +1,7 @@
 import wx
 
-from common.constants import SIZE_PANEL, g_MODS_CONFIG, STREAM_NAMES, g_PRESET_SETTINGS
-from common.path import MAIN_LOGO_600x100_PATH
+from common.constants import SIZE_PANEL
+from common.path import MAIN_LOGO_600x100_PATH, STREAM_NAMES, g_MODS_CONFIG, g_PRESET_SETTINGS
 from core.panel_template import TemplatePanel
 from core.tooltip import Tooltip
 from core.tree_selector import ThreeSelector
@@ -50,8 +50,11 @@ class SelectModsPanelUi(TemplatePanel):
         self.enable_button()
 
     def fill_three(self):
+        # стартовая позиция в pixel, поправка сдвиг высота зоны 1 ячейки
         start_pos, self.shift_pixel = 0, 19
+        # рутовая секция, без нее three не будет работать, по сути обязательный рудимент
         root = self.mods_panel.AddRoot('')
+        # выбранный пресет для модов
         select_preset = self.choice_stream_settings.GetStringSelection()
         for name_mod, info_mods in g_MODS_CONFIG.items():
             if isinstance(info_mods, list):
@@ -68,6 +71,7 @@ class SelectModsPanelUi(TemplatePanel):
                 start_pos += self.shift_pixel
                 for name_mod_, info in info_mods.items():
                     if name_mod_ in ('checkBox',):
+                        # используется только как флаг, 1 - check_box, 2 -  radio_button
                         continue
                     item = self.mods_panel.AppendItem(group, name_mod_, ct_type=check_box)
                     self.position_list.append([name_mod_, [start_pos, start_pos + self.shift_pixel]])
@@ -75,10 +79,16 @@ class SelectModsPanelUi(TemplatePanel):
                     self.item_three_dict.update({name_mod_: item})
                     start_pos += self.shift_pixel
                     if name_mod_ in g_PRESET_SETTINGS.get(select_preset):
+                        # если элемент находится в пресетах, то установить ему выбор
                         self.mods_panel.SetItem3StateValue(item, True)
+        # если не развернуть three то тултипы не будут работать правильно
         self.mods_panel.ExpandAll()
 
     def event_select_preset(self, event):
+        """
+        Метод вызывается при изменении выбора в селекторе пресетов
+        :param event: wx attr
+        """
         self.drop_select()
         name_streamer = self.choice_stream_settings.GetStringSelection()
         for name, item in self.item_three_dict.items():
@@ -89,26 +99,42 @@ class SelectModsPanelUi(TemplatePanel):
         event.Skip()
 
     def drop_select(self):
+        """
+        Сброс всех выбранных значений в three
+        :return: None
+        """
         for item in self.item_three_dict.values():
             self.mods_panel.CheckItem(item, False)
 
     def show_tooltip_om_mouse_move(self, event):
+        """
+        Метод определяет координаты курсора и в зависимости от позиции выводит тултип с подсказкой
+        :param event: wx attr
+        :return: None
+        """
+        # позиция скролл бара, необходима для внесени поправок если панель прокручена вниз. Это происходит из-за того,
+        # что нельзя (или я не нашел) получить фактический размер панели, а только тот который виден в frame
         scroll_pos = self.mods_panel.GetScrollPos(wx.VERTICAL)
-        pos_child_panel = self.ScreenToClient(event.GetPosition())
+        cursor_position = self.ScreenToClient(event.GetPosition())
+        # позиция основной панели
         parent_panel_pos = self.GetScreenPosition()
-        relative_pos_x = pos_child_panel[0] + parent_panel_pos[0]
-        relative_pos_y = pos_child_panel[1] + parent_panel_pos[1] + (scroll_pos * 10)
+        # расчитываем координаты, в том числе для у с учетом смещения(прокрутки) панели вниз/вверх
+        relative_pos_x = cursor_position[0] + parent_panel_pos[0]
+        relative_pos_y = cursor_position[1] + parent_panel_pos[1] + (scroll_pos * 10)
+        # координаты окна на мониторе
         frame_y, frame_x = self.frame.GetPosition()
+        # 45 - ширина в пикселях зоны, в которой необходимо рисовать тултип: 45 - старт > 200 конец
         if all([relative_pos_y > self.shift_pixel, relative_pos_x > 45, relative_pos_x < 200]):
             for item in self.position_list:
                 path_image, hint = self.info_mods_dict[item[0]]['image'], self.info_mods_dict[item[0]]['hint']
-                start_pos, end_pos = item[-1]
-                if all([relative_pos_y > start_pos, relative_pos_y < end_pos]):
+                start_pos, end_pos = item[-1]  # координаты текста мода
+                if all([relative_pos_y > start_pos, relative_pos_y < end_pos]):  # при вхождении рисуем тултип
                     if self.tooltip:
                         self.tooltip.Destroy()
                     self.tooltip = Tooltip(frame_y, frame_x, path_image, hint)
                     break
         else:
+            # предпочитаю разрушить в случае если тултип уже есть
             if self.tooltip:
                 self.tooltip.Destroy()
 
@@ -119,19 +145,31 @@ class SelectModsPanelUi(TemplatePanel):
         event.Skip()
 
     def event_enable_button(self, event):
+        """
+        Запускаем этот ивент при любом изменении состояния флажка в three
+        """
         self.enable_button()
         event.Skip()
 
     def enable_button(self):
-        if self.mods_panel.GetCheckedItems():
+        """
+        Если никакие значения не выбраны, то блокируем кнопку далее.
+        """
+        if self.mods_panel.get_checked_items():
             self.button_next.Enable()
         else:
             self.button_next.Disable()
 
     def event_checked_select(self, event):
+        """
+        Ивент запускается при нажатии Далее и коллекционирует все выбранные флажки, это важно,
+        т.к. список используется в следующих шагах
+        :param event: wx attr
+        """
         self.selected_mods_list = list()
-        checked_items = self.mods_panel.GetCheckedItems()
+        checked_items = self.mods_panel.get_checked_items()
         approved_mods_panel = self.frame.panel_init_dict['approved_mods']
+        # заранее вносим все выбранные моды в следующую панель, что бы избежать лагов
         approved_mods_panel.select_mod_ctrl.Clear()
         for item in checked_items:
             self.selected_mods_list.append(item.GetText())

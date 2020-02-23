@@ -4,8 +4,8 @@ import time
 import zipfile
 
 from common.common_utils import resource_path
-from common.constants import DROP_XVM_FOLDER, g_MODS_CONFIG, VERSION_CLIENT, DROP_GAME_FOLDER
-from common.path import PATH_TO_CACHE_WOT
+from common.constants import DROP_XVM_FOLDER,  VERSION_CLIENT, DROP_GAME_FOLDER
+from common.path import PATH_TO_CACHE_WOT, g_MODS_CONFIG
 
 
 class InstallScenario:

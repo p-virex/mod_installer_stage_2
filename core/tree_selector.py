@@ -6,25 +6,25 @@ class ThreeSelector(wx.lib.agw.customtreectrl.CustomTreeCtrl):
     def __init__(self, parent):
         frame_styles = wx.TR_HIDE_ROOT | wx.TR_MULTIPLE | wx.TR_LINES_AT_ROOT
         wx.lib.agw.customtreectrl.CustomTreeCtrl.__init__(self, parent, agwStyle=frame_styles)
-        myCursor = wx.Cursor(wx.CURSOR_HAND)
-        self.SetCursor(myCursor)
+        cursor = wx.Cursor(wx.CURSOR_HAND)
+        self.SetCursor(cursor)
         self.SetBackgroundColour(wx.WHITE)
 
-    def GetCheckedItems(self, itemParent=None, checkedItems=None):
-        if itemParent is None:
-            itemParent = self.GetRootItem()
+    def get_checked_items(self, item_parent=None, checked_items=None):
+        if item_parent is None:
+            item_parent = self.GetRootItem()
 
-        if checkedItems is None:
-            checkedItems = []
+        if checked_items is None:
+            checked_items = []
 
-        child, cookie = self.GetFirstChild(itemParent)
+        child, cookie = self.GetFirstChild(item_parent)
 
         while child:
 
             if self.IsItemChecked(child):
-                checkedItems.append(child)
+                checked_items.append(child)
 
-            checkedItems = self.GetCheckedItems(child, checkedItems)
-            child, cookie = self.GetNextChild(itemParent, cookie)
+            checked_items = self.get_checked_items(child, checked_items)
+            child, cookie = self.GetNextChild(item_parent, cookie)
 
-        return checkedItems
+        return checked_items

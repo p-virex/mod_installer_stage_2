@@ -5,12 +5,14 @@ import wx
 
 from common.constants import SIZE_PANEL, VERSION_CLIENT
 from common.path import MAIN_LOGO_600x100_PATH, WGC_DEFAULT_PATH
+from core.logger import logger
 from core.panel_template import TemplatePanel
 
 
 class SearchGamePanelUi(TemplatePanel):
     def __init__(self, parent, panel_name):
         super(SearchGamePanelUi, self).__init__(parent, panel_name)
+        self.path_client_set = set()
         self.SetSizeHints(minSize=SIZE_PANEL, maxSize=SIZE_PANEL)
         self.logo_image = wx.Bitmap(MAIN_LOGO_600x100_PATH)
         self.game_path = wx.Choice(self, wx.ID_ANY, choices=[])
@@ -44,44 +46,53 @@ class SearchGamePanelUi(TemplatePanel):
         self.search_path_game()
 
     def event_select_dir(self, event):
-        """
-        Show the DirDialog and print the user's choice to stdout
-        """
         dlg = wx.DirDialog(self, self.get_text('select_dir'), style=wx.DD_DEFAULT_STYLE |
-                                                              wx.DD_DIR_MUST_EXIST |
-                                                              wx.DD_CHANGE_DIR)
+                                                                    wx.DD_DIR_MUST_EXIST |
+                                                                    wx.DD_CHANGE_DIR)
         if dlg.ShowModal() == wx.ID_OK:
-            if self.checkModsDirVersion(dlg.GetPath()):
-                self.game_path.Append(dlg.GetPath())
+            if self.check_mods_dir_version(dlg.GetPath()):
+                self.path_client_set.update([dlg.GetPath()])
+                self.append_path_in_selector()
                 self.game_path.SetSelection(int(self.game_path.GetCount()) - 1)
-            else:
-                wx.MessageBox(self.get_text('game_not_found'))
         dlg.Destroy()
+        event.Skip()
 
     def search_path_game(self):
         if not os.path.isfile(WGC_DEFAULT_PATH):
             return
         root = et.parse(WGC_DEFAULT_PATH).getroot()
         for subtags in root.findall('./application/games_manager/selectedGames/WOT'):
-            if self.checkModsDirVersion(subtags.text):
-                self.game_path.Append(subtags.text)
+            if self.check_mods_dir_version(subtags.text) and self.check_mods_dir_version(subtags.text):
+                self.path_client_set.update([subtags.text])
                 self.button_next.Enable()
-                self.checkModsDirVersion(subtags.text)
+                logger.info('Game found: {}'.format(subtags.text))
+            else:
+                logger.error('Game not found!')
+                return
         for subtags in root.findall('./application/games_manager/games/game/working_dir'):
-            if self.checkModsDirVersion(subtags.text):
-                self.game_path.Append(subtags.text)
+            if self.check_mods_dir_version(subtags.text) and self.check_mods_dir_version(subtags.text):
+                self.path_client_set.update([subtags.text])
                 self.button_next.Enable()
-                self.checkModsDirVersion(subtags.text)
+                logger.info('Game found: {}'.format(subtags.text))
+        self.append_path_in_selector()
         self.game_path.SetSelection(0)
 
-    @staticmethod
-    def checkModsDirVersion(path):
+    def append_path_in_selector(self):
+        self.game_path.Clear()
+        for path_client in self.path_client_set:
+            self.game_path.Append(path_client)
+
+    def check_mods_dir_version(self, path):
         version_xml = os.path.join(path, 'version.xml')
         if not os.path.isfile(version_xml):
+            logger.error('File: {} not found!'.format(version_xml))
             return
         root = et.parse(version_xml).getroot()
         for subtags in root.findall('version'):
             if subtags.text.split()[0] == VERSION_CLIENT:
                 return True
             else:
+                # todo сделать отдельный метод в template_panel
+                logger.error(self.get_text('broken_version') % (subtags.text, VERSION_CLIENT))
+                wx.MessageBox(self.get_text('broken_version') % (subtags.text, VERSION_CLIENT), 'Warning')
                 return

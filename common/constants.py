@@ -1,8 +1,11 @@
-import json
+import os
 
 import wx
 
-from common.common_utils import resource_path
+
+g_PYTHON_START = True if os.path.isfile(os.path.join(os.getcwd(), 'start_python')) else False
+
+g_DEBUG = True if os.path.isfile(os.path.join(os.getcwd(), 'debug')) else False
 
 VERSION = '2.0'
 
@@ -15,12 +18,8 @@ SIZE_PANEL = (585, 625)
 
 FRAME_STYLE = wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL | wx.BORDER
 
-g_MODS_CONFIG = json.load(open(resource_path('mods_config.json'), encoding='utf-8'))
-
-g_PRESET_SETTINGS = json.load(open(resource_path('stream_settings.json'), encoding='utf-8'))
-
-STREAM_NAMES = list(g_PRESET_SETTINGS.keys())
-
 DROP_GAME_FOLDER = ['battle_results', 'clan_cache', 'custom_data', 'veh_cmp_cache', 'dossier_cache', 'web_cache']
 
 DROP_XVM_FOLDER = ['xvm\\Hitlog', 'xvm\\cache', 'xvm\\custom_data', 'xvm\\statistics']
+
+DEFAULT_LANG = 'RU'

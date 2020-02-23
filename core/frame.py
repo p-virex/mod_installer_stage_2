@@ -1,11 +1,8 @@
-import gettext
-import os
-
 import wx
 
-from common.common_utils import resource_path
 from common.constants import TITLE, SIZE_FRAME, FRAME_STYLE
 from common.path import ICON_PATH
+from core.logger import logger
 
 
 class ModsFrame(wx.Frame):
@@ -43,9 +40,11 @@ class ModsFrame(wx.Frame):
 
     def switch_panel(self, show_panel):
         if not show_panel or show_panel.IsShown():
+            logger.info('Shown panel {} not found!'.format(show_panel))
             return
         for panel in self.panel_list:
             if panel.IsShown():
+                logger.info('Panel: "{}" shown'.format(show_panel.panel_name))
                 show_panel.Show()
                 show_panel.Layout()
                 panel.Hide()
@@ -53,6 +52,7 @@ class ModsFrame(wx.Frame):
         self.Layout()
 
     def on_close_window_not_event(self):
+        logger.info('App closed')
         self.Destroy()
 
     def on_close_window(self, event):

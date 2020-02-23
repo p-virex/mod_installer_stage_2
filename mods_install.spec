@@ -18,7 +18,9 @@ a = Analysis(['mods_install.py'],
              win_private_assemblies=False,
              cipher=block_cipher,
              noarchive=False)
-			 
+
+# TODO: REMOVE AND TRANSFER, READ FROM .py CONFIG
+
 a.datas += [('res/res_image/battle_hits_poliroid.jpg', os.path.join(path_cwd, 'res', 'res_image', 'battle_hits_poliroid.jpg'), 'DATA')]
 a.datas += [('res/res_image/cust_veh.jpg', os.path.join(path_cwd, 'res', 'res_image', 'cust_veh.jpg'), 'DATA')]
 a.datas += [('res/res_image/logo_600_100.png', os.path.join(path_cwd, 'res', 'res_image', 'logo_600_100.png'), 'DATA')]
@@ -47,4 +49,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True , icon=os.path.join(path_cwd, 'res\\res_image\\main.ico'))
+          console=False , icon=os.path.join(path_cwd, 'res\\res_image\\main.ico'))

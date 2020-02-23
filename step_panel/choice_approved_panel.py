@@ -32,8 +32,5 @@ class ChoiceApprovedPanelUi(TemplatePanel):
 
     def fill_mods(self):
         select_mods_panel = self.frame.panel_init_dict['select_mods']
-        print(select_mods_panel.selected_mods_list)
-
         for mods in select_mods_panel.selected_mods_list:
             self.select_mod_ctrl.AppendText(mods + '\n')
-            print(mods)

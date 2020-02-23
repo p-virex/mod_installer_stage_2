@@ -4,6 +4,8 @@ import os
 import wx
 
 from common.common_utils import resource_path
+from common.constants import DEFAULT_LANG
+from core.logger import logger
 
 
 class TemplatePanel(wx.Panel):
@@ -16,14 +18,17 @@ class TemplatePanel(wx.Panel):
 
     @staticmethod
     def set_language():
-        os.environ["LANGUAGE"] = "{}.UTF-8".format('RU')
-        gettext.bindtextdomain('{}'.format('RU').lower(), resource_path('locales'))
-        gettext.textdomain('{}'.format('RU').lower())
+        logger.info('Set language: {}'.format(DEFAULT_LANG))
+        os.environ["LANGUAGE"] = "{}.UTF-8".format(DEFAULT_LANG)
+        gettext.bindtextdomain('{}'.format(DEFAULT_LANG).lower(), resource_path('locales'))
+        gettext.textdomain('{}'.format(DEFAULT_LANG).lower())
 
     def event_next_step(self, event):
         current_panel_ind = self.frame.panel_ind.get(self.panel_name)
         next_panel_ind = self.frame.ind_panel.get(current_panel_ind + 1)
-        self.frame.switch_panel(self.frame.panel_init_dict.get(next_panel_ind))
+        next_panel = self.frame.panel_init_dict.get(next_panel_ind)
+        self.frame.switch_panel(next_panel)
+        logger.info('Next panel: {}'.format(self.frame.panel_init_dict.get(next_panel_ind).panel_name))
         event.Skip()
 
     def event_prev_step(self, event):
