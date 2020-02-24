@@ -22,16 +22,28 @@ class ModsFrame(wx.Frame):
         self.registrate_panel()
 
     def index_panel(self):
+        """
+        Выполняет индексацию панелей, используется для по-шагового переключения кнопками Назад или Далее.
+        Создаем 2 словаря:
+        {index: name_panel}
+        {name_panel: index}
+        """
         for i, panel_name in enumerate(self.panel_info.keys()):
             self.ind_panel.update({i: panel_name})
             self.panel_ind.update({panel_name: i})
 
     def init_hide_panel(self):
+        """
+        Скрываем все панели, оторажаем только панель приветствия.
+        """
         for panel_name, self_panel in self.panel_info.items():
             self_panel.Hide()
         self.panel_init_dict['greeting'].Show()
 
     def registrate_panel(self):
+        """
+        Метод осуществляет инициализацию и регистрацию панелей.
+        """
         for panel_name, self_panel in self.panel_info.items():
             panel_init = self_panel(self, panel_name)
             self.panel_list.append(panel_init)
@@ -39,6 +51,10 @@ class ModsFrame(wx.Frame):
         self.index_panel()
 
     def switch_panel(self, show_panel):
+        """
+        Метод переключает панель на приходящую и скрывает предыдущую.
+        :param show_panel: панель которую необходимо отобразить
+        """
         if not show_panel or show_panel.IsShown():
             logger.info('Shown panel {} not found!'.format(show_panel))
             return

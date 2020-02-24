@@ -1,7 +1,7 @@
 import wx
 
 from common.constants import SIZE_PANEL
-from common.path import MAIN_LOGO_600x100_PATH, STREAM_NAMES, g_MODS_CONFIG, g_PRESET_SETTINGS
+from common.path import MAIN_LOGO_600x100_PATH, PRESET_NAMES, g_MODS_CONFIG, g_PRESET_SETTINGS
 from core.panel_template import TemplatePanel
 from core.tooltip import Tooltip
 from core.tree_selector import ThreeSelector
@@ -25,7 +25,7 @@ class SelectModsPanelUi(TemplatePanel):
         self.button_next = wx.Button(self, wx.ID_ANY, self.get_text('next_button'))
         self.button_next.Disable()
         self.mods_panel = ThreeSelector(self)
-        self.choice_stream_settings = wx.Choice(self, wx.ID_ANY, choices=STREAM_NAMES)
+        self.choice_stream_settings = wx.Choice(self, wx.ID_ANY, choices=PRESET_NAMES)
         self.choice_stream_settings.SetSelection(0)
         self.button_sizer.Add(self.button_back, 1, wx.ALL | wx.EXPAND | wx.RIGHT, 5)
         self.button_sizer.Add(self.button_next, 1, wx.ALL | wx.EXPAND | wx.RIGHT, 5)

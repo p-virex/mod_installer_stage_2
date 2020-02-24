@@ -34,19 +34,6 @@ LOGGER_FORMATTER = logging.Formatter(
     datefmt=DATE_FORMAT
 )
 
-CUSTOM_FORMATTER = logging.Formatter(
-    fmt="%(levelname)s : %(message)s",
-    datefmt=DATE_FORMAT
-)
-
-LEVEL_MAPPING = {
-    'debug': logging.DEBUG,
-    'info': logging.INFO,
-    'warning': logging.WARNING,
-    'error': logging.ERROR,
-    'critical': logging.ERROR
-}
-
 
 def get_console_handler():
     console_handler = logging.StreamHandler(sys.stdout)

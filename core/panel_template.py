@@ -9,21 +9,29 @@ from core.logger import logger
 
 
 class TemplatePanel(wx.Panel):
+    """
+    Базовый класс, от которого наследуются остальные наборные панели.
+    """
     def __init__(self, parent, panel_name):
         super(TemplatePanel, self).__init__(parent)
-        self.set_language()
         self.frame = parent
         self.panel_name = panel_name
-        self.Hide()
+        self.set_language()
 
     @staticmethod
     def set_language():
+        """
+        Метод устанавливает язык, на даыннй момент по деволту только RU
+        """
         logger.info('Set language: {}'.format(DEFAULT_LANG))
         os.environ["LANGUAGE"] = "{}.UTF-8".format(DEFAULT_LANG)
         gettext.bindtextdomain('{}'.format(DEFAULT_LANG).lower(), resource_path('locales'))
         gettext.textdomain('{}'.format(DEFAULT_LANG).lower())
 
     def event_next_step(self, event):
+        """
+        Ивент осуществляет переключение панели на следующу при нажатии на кнопку Далее
+        """
         current_panel_ind = self.frame.panel_ind.get(self.panel_name)
         next_panel_ind = self.frame.ind_panel.get(current_panel_ind + 1)
         next_panel = self.frame.panel_init_dict.get(next_panel_ind)
@@ -32,6 +40,10 @@ class TemplatePanel(wx.Panel):
         event.Skip()
 
     def event_prev_step(self, event):
+        """
+        Ивент осуществляет переключение панели на предыдущую при нажатии на кнопку Назад. В случае если вернуться назад
+        нельзя, то закрывает приложение
+        """
         current_panel_ind = self.frame.panel_ind.get(self.panel_name)
         prev_panel_name = self.frame.ind_panel.get(current_panel_ind - 1)
         prev_panel_ind = self.frame.panel_ind.get(prev_panel_name, -1)
@@ -42,6 +54,11 @@ class TemplatePanel(wx.Panel):
 
     @staticmethod
     def set_tooltip(item, text):
+        """
+        Установить тултип объекту
+        :param item: wx объект
+        :param text: текст тултипа
+        """
         item.SetToolTip(wx.ToolTip(text))
 
     @staticmethod
@@ -53,4 +70,8 @@ class TemplatePanel(wx.Panel):
 
     @staticmethod
     def get_text(key):
+        """
+        Получить текст по ключу.
+        :param key: ключ
+        """
         return gettext.gettext(key)

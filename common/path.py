@@ -17,6 +17,6 @@ LOG_FOLDER = os.path.join(os.environ['appdata'], 'TEMP_INSTALLER_LOGS', 'INSTALL
 
 g_MODS_CONFIG = json.load(open(resource_path('mods_config.json'), encoding='utf-8'))
 
-g_PRESET_SETTINGS = json.load(open(resource_path('stream_settings.json'), encoding='utf-8'))
+g_PRESET_SETTINGS = json.load(open(resource_path('preset.json'), encoding='utf-8'))
 
-STREAM_NAMES = list(g_PRESET_SETTINGS.keys())
+PRESET_NAMES = list(g_PRESET_SETTINGS.keys())

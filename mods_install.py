@@ -10,15 +10,14 @@ from step_panel.preparing_client_panel import PreparingClientPanelUi
 from step_panel.search_game_panel import SearchGamePanelUi
 from step_panel.select_mods_panel import SelectModsPanelUi
 
-PANEL_INFO = OrderedDict({
+PANEL_INFO = {
     'greeting': GreetingPanelUi,
     'search_game': SearchGamePanelUi,
     'select_mods': SelectModsPanelUi,
     'approved_mods': ChoiceApprovedPanelUi,
     'preparing_client': PreparingClientPanelUi,
     'install': InstallPanelUi
-})
-
+}
 
 if __name__ == '__main__':
     app = wx.App(False)
