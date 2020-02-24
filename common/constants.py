@@ -9,7 +9,7 @@ g_DEBUG = True if os.path.isfile(os.path.join(os.getcwd(), 'debug')) else False
 
 VERSION = '2.0'
 
-TITLE = 'Sharevax installer {}'.format(VERSION)
+TITLE = 'Sharewax installer {}'.format(VERSION)
 
 VERSION_CLIENT = 'v.1.7.1.2'
 
