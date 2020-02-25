@@ -14,7 +14,7 @@ def resource_path(relative_path):
     if not g_PYTHON_START:
         base_path = sys._MEIPASS
     else:
-        base_path = os.path.abspath(".")
+        base_path = os.getcwd()
     return os.path.join(base_path, 'res', relative_path)
 
 

@@ -46,9 +46,7 @@ class SearchGamePanelUi(TemplatePanel):
         self.search_path_game()
 
     def event_select_dir(self, event):
-        dlg = wx.DirDialog(self, self.get_text('select_dir'), style=wx.DD_DEFAULT_STYLE |
-                                                                    wx.DD_DIR_MUST_EXIST |
-                                                                    wx.DD_CHANGE_DIR)
+        dlg = wx.DirDialog(self, self.get_text('select_dir'), style=wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST)
         if dlg.ShowModal() == wx.ID_OK:
             if self.check_mods_dir_version(dlg.GetPath()):
                 self.path_client_set.update([dlg.GetPath()])
