@@ -28,16 +28,16 @@ for name, mod_info in mods_info.items():
         a_path, zip_mods = info[0], info[1]
         full_path_image = os.path.normpath(os.path.join(path_cwd, 'res', a_path))
         full_path_zip = os.path.normpath(os.path.join(path_cwd, 'res', zip_mods))
-        a.datas += [('res/' + a_path, full_path_image, 'DATA')]
-        a.datas += [('res/' + zip_mods, full_path_zip, 'DATA')]
+        a.datas.append(('res/' + a_path, full_path_image, 'DATA'))
+        a.datas.append(('res/' + zip_mods, full_path_zip, 'DATA'))
         print('Added: image > {}, zip > {}'.format(full_path_image, full_path_zip))
 
-a.datas += [('res/mods_config.json', os.path.join(path_cwd, 'res', 'mods_config.json'), 'DATA')]
-a.datas += [('res/preset.json', os.path.join(path_cwd, 'res', 'preset.json'), 'DATA')]
-a.datas += [('res/res_image/main.ico', os.path.join(path_cwd, 'res', 'res_image', 'main.ico'), 'DATA')]
-a.datas += [('res/res_image/logo_600_100.png', os.path.join(path_cwd, 'res', 'res_image', 'logo_600_100.png'), 'DATA')]
-a.datas += [('res/res_image/logo_600x500.png', os.path.join(path_cwd, 'res', 'res_image', 'logo_600x500.png'), 'DATA')]
-a.datas += [('res/res_image/not_found.jpg', os.path.join(path_cwd, 'res', 'res_image', 'not_found.jpg'), 'DATA')]
+ADDED_FILES = ['mods_config.json', 'preset.json', 'res_image/main.ico', 'res_image/logo_600_100.png',
+                'res_image/logo_600x500.png', 'res_image/not_found.jpg']
+
+for file_name in ADDED_FILES:
+    a.datas.append(('res/' + file_name, os.path.join(path_cwd, 'res', file_name), 'DATA'))
+    print('Added: {}'.format(file_name))
 
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
