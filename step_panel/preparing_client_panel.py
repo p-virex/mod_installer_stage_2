@@ -1,3 +1,5 @@
+import os
+
 import wx
 
 from common.constants import SIZE_PANEL
