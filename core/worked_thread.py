@@ -9,4 +9,4 @@ class WorkedThread(Thread):
         self.start()
 
     def run(self):
-        self.scenario(self.data)
+        self.scenario(self.data).run_scenario()

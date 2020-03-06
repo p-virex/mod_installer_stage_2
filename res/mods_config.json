@@ -16,5 +16,10 @@
       "mods/branding_vehicle.zip",
       "Branded Tank Styles This is a modification for the game \"World Of Tanks\" that give gui\nand functional to fastchanges of tank Camouflage/Logo/Advert in hangar unto two teams."
     ]
-  }
+  },
+  "Процент отметок на орудие": [
+    null,
+    "mods/marksOnGun.zip",
+    "Отображает в бою текущий процент для\nполучения отметки на орудие"
+  ]
 }

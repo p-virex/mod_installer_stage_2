@@ -10,12 +10,12 @@ from common.path import PATH_TO_CACHE_WOT, g_MODS_CONFIG
 
 class InstallScenario:
     def __init__(self, data):
+        self.client_path = ''
         self.frame = data['frame']
         self.install_panel = data['install_panel']
         self.event_list = data['event_list']
         self.event_progress_list = data['event_list']
         self.pos_progress = len(self.event_list)
-        self.run_scenario()
 
     def run_scenario(self):
         self.preparing_game()
@@ -49,25 +49,34 @@ class InstallScenario:
             self.update_progress_bar('backup')
 
     def install_mods(self):
-        client_path = self.frame.panel_init_dict['search_game'].game_path.GetStringSelection()
+        self.client_path = self.frame.panel_init_dict['search_game'].game_path.GetStringSelection()
         mods_panel = self.frame.panel_init_dict['select_mods']
+        full_path = os.path.join(self.client_path, 'mods', VERSION_CLIENT.lstrip('v.'))
+        if not os.path.isdir(full_path):
+            self.send_msg(self.install_panel.get_text('dir_not_found') % full_path)
+            return
 
         for name_mod in mods_panel.selected_mods_list:
+            if g_MODS_CONFIG.get(name_mod):
+                mod_path = os.path.normpath(g_MODS_CONFIG[name_mod][1])
+                self.unpack_mod(mod_path, name_mod)
+                continue
             for name_group, mods_info in g_MODS_CONFIG.items():
-                if name_mod not in g_MODS_CONFIG[name_group].keys():
+                if not isinstance(g_MODS_CONFIG[name_group], dict) or name_mod not in g_MODS_CONFIG[name_group].keys():
                     continue
-                full_path = os.path.join(client_path, 'mods', VERSION_CLIENT.lstrip('v.'))
-                if not os.path.isdir(full_path):
-                    self.send_msg(self.install_panel.get_text('dir_not_found') % full_path)
-                    return
+
                 mod_path = os.path.normpath(g_MODS_CONFIG[name_group][name_mod][1])
-                zip_file = zipfile.ZipFile(resource_path(mod_path), 'r')
-                zip_file.extractall(full_path)
-                zip_file.close()
-                self.send_msg(self.install_panel.get_text('success_install') % name_mod)
-                self.update_progress_bar(name_mod)
-        self.send_msg(self.install_panel.get_text('mods_installed') % client_path)
+                self.unpack_mod(mod_path, name_mod)
+        self.send_msg(self.install_panel.get_text('mods_installed') % self.client_path)
         self.install_panel.button_back.Enable()
+
+    def unpack_mod(self, mod_path, name_mod):
+        full_path = os.path.join(self.client_path, 'mods', VERSION_CLIENT.lstrip('v.'))
+        zip_file = zipfile.ZipFile(resource_path(mod_path), 'r')
+        zip_file.extractall(full_path)
+        zip_file.close()
+        self.send_msg(self.install_panel.get_text('success_install') % name_mod)
+        self.update_progress_bar(name_mod)
 
     def create_backup(self):
         client_path = self.frame.panel_init_dict['search_game'].game_path.GetStringSelection()
@@ -77,12 +86,11 @@ class InstallScenario:
         if not os.path.exists(backup_folder):
             os.mkdir(backup_folder)
         path_to_zip = os.path.join(backup_folder, 'backup_mods_{}.zip'.format(VERSION_CLIENT))
-        zipp = zipfile.ZipFile(path_to_zip, mode='w')
+        zip_p = zipfile.ZipFile(path_to_zip, mode='w')
         for root, dirs, files in os.walk(mods_folder_path):
             for file in files:
-                zipp.write(os.path.join(root, file))
-
-        zipp.close()
+                zip_p.write(os.path.join(root, file))
+        zip_p.close()
 
     def send_msg(self, msg):
         self.install_panel.logging_window.AppendText(msg + '\n')
