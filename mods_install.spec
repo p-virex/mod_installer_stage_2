@@ -22,15 +22,28 @@ a = Analysis(['mods_install.py'],
              noarchive=False)
 
 for name, mod_info in mods_info.items():
-    for mods, info in mod_info.items():
-        if mods in ("checkBox", ):
-            continue
+    if isinstance(mod_info, dict):
+        for mods, info in mod_info.items():
+            if mods in ("checkBox", ):
+                continue
+            a_path, zip_mods = info[0], info[1]
+            if a_path is not None:
+                full_path_image = os.path.normpath(os.path.join(path_cwd, 'res', a_path))
+                a.datas.append(('res/' + a_path, full_path_image, 'DATA'))
+                print('Added image: {}'.format(full_path_image))
+            full_path_zip = os.path.normpath(os.path.join(path_cwd, 'res', zip_mods))
+            a.datas.append(('res/' + zip_mods, full_path_zip, 'DATA'))
+            print('Added mod: {}'.format(full_path_zip))
+    else:
+        info = mods_info.get(name)
         a_path, zip_mods = info[0], info[1]
-        full_path_image = os.path.normpath(os.path.join(path_cwd, 'res', a_path))
+        if a_path is not None:
+            full_path_image = os.path.normpath(os.path.join(path_cwd, 'res', a_path))
+            a.datas.append(('res/' + a_path, full_path_image, 'DATA'))
+            print('Added image: {}'.format(full_path_image))
         full_path_zip = os.path.normpath(os.path.join(path_cwd, 'res', zip_mods))
-        a.datas.append(('res/' + a_path, full_path_image, 'DATA'))
         a.datas.append(('res/' + zip_mods, full_path_zip, 'DATA'))
-        print('Added: image > {}, zip > {}'.format(full_path_image, full_path_zip))
+        print('Added mod: {}'.format(full_path_zip))
 
 ADDED_FILES = ['mods_config.json', 'preset.json', 'res_image/main.ico', 'res_image/logo_600_100.png',
                 'res_image/logo_600x500.png', 'res_image/not_found.jpg']
