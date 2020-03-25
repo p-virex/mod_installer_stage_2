@@ -11,7 +11,7 @@ VERSION = '2.0'
 
 TITLE = 'Sharewax installer {}'.format(VERSION)
 
-VERSION_CLIENT = 'v.1.8.0.0'
+VERSION_CLIENT = 'v.1.8.0.1'
 
 SIZE_FRAME = (600, 660)
 SIZE_PANEL = (585, 625)
