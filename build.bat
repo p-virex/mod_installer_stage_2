@@ -1,0 +1,2 @@
+pyinstaller mods_install.spec
+pause
