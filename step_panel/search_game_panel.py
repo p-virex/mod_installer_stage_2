@@ -53,6 +53,7 @@ class SearchGamePanelUi(TemplatePanel):
                     self.path_client_list.append(dlg.GetPath())
                     self.append_path_in_selector()
                     self.game_path.SetSelection(int(self.game_path.GetCount()) - 1)
+                    self.button_next.Enable()
                 else:
                     wx.MessageBox(self.get_text('game_in_list_error'), 'Warning')
         dlg.Destroy()
