@@ -1,10 +1,9 @@
 import os
 import shutil
-import time
 import zipfile
 
 from common.common_utils import resource_path
-from common.constants import DROP_XVM_FOLDER,  VERSION_CLIENT, DROP_GAME_FOLDER
+from common.constants import DROP_XVM_FOLDER, VERSION_CLIENT, DROP_GAME_FOLDER, SET_IN_GAME_FOLDER, ONLY_INT_VERSION
 from common.path import PATH_TO_CACHE_WOT, g_MODS_CONFIG
 
 
@@ -27,8 +26,8 @@ class InstallScenario:
         if pre_panel.checkbox_del_old_mods.GetValue():
             client_path = self.frame.panel_init_dict['search_game'].game_path.GetStringSelection()
             self.send_msg(self.install_panel.get_text('del_mods_install'))
-            mod_folder = os.path.join(client_path, 'mods', VERSION_CLIENT.lstrip('v.'))
-            self.remove_folders(os.path.join(client_path, 'mods'), [VERSION_CLIENT.lstrip('v.')])
+            mod_folder = os.path.join(client_path, 'mods', ONLY_INT_VERSION)
+            self.remove_folders(os.path.join(client_path, 'mods'), [ONLY_INT_VERSION])
             if not os.path.exists(mod_folder):
                 os.mkdir(mod_folder)
             self.update_progress_bar('del_mods')
@@ -71,7 +70,7 @@ class InstallScenario:
         self.install_panel.button_back.Enable()
 
     def unpack_mod(self, mod_path, name_mod):
-        full_path = os.path.join(self.client_path, 'mods', VERSION_CLIENT.lstrip('v.'))
+        full_path = self.client_path if SET_IN_GAME_FOLDER else os.path.join(self.client_path, 'mods', ONLY_INT_VERSION)
         zip_file = zipfile.ZipFile(resource_path(mod_path), 'r')
         zip_file.extractall(full_path)
         zip_file.close()
@@ -80,7 +79,7 @@ class InstallScenario:
 
     def create_backup(self):
         client_path = self.frame.panel_init_dict['search_game'].game_path.GetStringSelection()
-        mods_folder_path = os.path.join(client_path, 'mods', VERSION_CLIENT.lstrip('v.'))
+        mods_folder_path = os.path.join(client_path, 'mods', ONLY_INT_VERSION)
 
         backup_folder = client_path + os.sep + 'mods_backup'
         if not os.path.exists(backup_folder):
