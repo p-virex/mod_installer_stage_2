@@ -3,6 +3,7 @@ import wx
 from common.common_utils import open_web_page
 from common.constants import SIZE_PANEL
 from common.path import MAIN_LOGO_600x100_PATH
+from core.cache import g_cache
 from core.worked_thread import WorkedThread
 from core.panel_template import TemplatePanel
 from step_panel.install_backend import InstallScenario
@@ -57,6 +58,13 @@ class InstallPanelUi(TemplatePanel):
         self.event_list += mods_panel.selected_mods_list
         self.progress_bar.SetRange(len(self.event_list))
         WorkedThread(InstallScenario, frame=self.frame, install_panel=self, event_list=self.event_list)
+        self.event_save_to_cache()
+
+    def event_save_to_cache(self):
+        select_clint = self.frame.panel_init_dict['search_game'].game_path.GetStringSelection()
+        g_cache.set_to_cache('last_client', select_clint)
+        last_mods = self.frame.panel_init_dict['select_mods'].selected_mods_list
+        g_cache.set_to_cache('last_mods', last_mods)
 
     def check_event(self):
         pre_panel = self.frame.panel_init_dict['preparing_client']

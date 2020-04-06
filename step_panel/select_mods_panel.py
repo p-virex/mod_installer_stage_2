@@ -2,6 +2,8 @@ import wx
 
 from common.constants import SIZE_PANEL
 from common.path import MAIN_LOGO_600x100_PATH, PRESET_NAMES, g_MODS_CONFIG, g_PRESET_SETTINGS
+from core.cache import g_cache
+from core.logger import logger
 from core.panel_template import TemplatePanel
 from core.tooltip import Tooltip
 from core.tree_selector import ThreeSelector
@@ -55,7 +57,12 @@ class SelectModsPanelUi(TemplatePanel):
         # рутовая секция, без нее three не будет работать, по сути обязательный рудимент
         root = self.mods_panel.AddRoot('')
         # выбранный пресет для модов
+
+        cache_mods = g_cache.get_from_cache('last_mods')
+
         select_preset = self.choice_stream_settings.GetStringSelection()
+        if cache_mods:
+            self.choice_stream_settings.SetSelection(-1)
         for name_mod, info_mods in g_MODS_CONFIG.items():
             if isinstance(info_mods, list):
                 item = self.mods_panel.AppendItem(root, name_mod, ct_type=1)
@@ -63,8 +70,13 @@ class SelectModsPanelUi(TemplatePanel):
                 self.info_mods_dict.update({name_mod: {'image': info_mods[0], 'hint': info_mods[-1]}})
                 self.item_three_dict.update({name_mod: item})
                 start_pos += self.shift_pixel
-                if name_mod in g_PRESET_SETTINGS.get(select_preset):
+                if not cache_mods and name_mod in g_PRESET_SETTINGS.get(select_preset):
                     self.mods_panel.SetItem3StateValue(item, True)
+                else:
+                    logger.info('{}, caсhe mods: {}'.format(name_mod, cache_mods))
+                    if cache_mods and name_mod in cache_mods:
+                        self.mods_panel.SetItem3StateValue(item, True)
+
             if isinstance(info_mods, dict):
                 group = self.mods_panel.AppendItem(root, name_mod)
                 check_box = 1 if info_mods.get('checkBox') else 2
@@ -78,9 +90,13 @@ class SelectModsPanelUi(TemplatePanel):
                     self.info_mods_dict.update({name_mod_: {'image': info[0], 'hint': info[-1]}})
                     self.item_three_dict.update({name_mod_: item})
                     start_pos += self.shift_pixel
-                    if name_mod_ in g_PRESET_SETTINGS.get(select_preset):
+                    if not cache_mods and name_mod_ in g_PRESET_SETTINGS.get(select_preset):
                         # если элемент находится в пресетах, то установить ему выбор
                         self.mods_panel.SetItem3StateValue(item, True)
+                    else:
+                        logger.info('{}, cahe mods: {}'.format(name_mod_, cache_mods))
+                        if cache_mods and name_mod_ in cache_mods:
+                            self.mods_panel.SetItem3StateValue(item, True)
         # если не развернуть three то тултипы не будут работать правильно
         self.mods_panel.ExpandAll()
 

@@ -5,6 +5,7 @@ import wx
 
 from common.constants import SIZE_PANEL, VERSION_CLIENT
 from common.path import MAIN_LOGO_600x100_PATH, WGC_DEFAULT_PATH
+from core.cache import g_cache
 from core.logger import logger
 from core.panel_template import TemplatePanel
 
@@ -68,15 +69,23 @@ class SearchGamePanelUi(TemplatePanel):
                     self.path_client_list.append(subtags.text)
                     self.button_next.Enable()
                     logger.info('Game found in selectedGames: {}'.format(subtags.text))
-            else:
-                logger.error('Game not found!')
-                return
         for subtags in root.findall('./application/games_manager/games/game/working_dir'):
             if self.check_mods_dir_version(subtags.text) and subtags.text not in self.path_client_list:
                 self.path_client_list.append(subtags.text)
                 self.button_next.Enable()
                 logger.info('Game found in working_dir: {}'.format(subtags.text))
         self.append_path_in_selector()
+        if g_cache.get_from_cache('last_client'):
+            self.event_sync_cache()
+        self.game_path.SetSelection(0)
+
+    def event_sync_cache(self):
+        last_path = g_cache.get_from_cache('last_client')
+        for ind, path in enumerate(self.path_client_list):
+            if path == last_path:
+                logger.info('Last path exist')
+                self.game_path.SetSelection(ind)
+                return
         self.game_path.SetSelection(0)
 
     def append_path_in_selector(self):
