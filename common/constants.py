@@ -11,7 +11,7 @@ VERSION = '2.0.2.0'
 
 TITLE = 'PVirex installer {}'.format(VERSION)
 
-VERSION_CLIENT = 'v.1.8.0.1'
+VERSION_CLIENT = 'v.1.8.0.2'
 ONLY_INT_VERSION = VERSION_CLIENT.lstrip('v.')
 
 SIZE_FRAME = (600, 660)
