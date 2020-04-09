@@ -25,6 +25,8 @@ def make_zipfile(output_filename, source_dir, name_pack):
 
 
 for mods_pack in os.listdir(PATH_TO_UNPACK_MODS):
+    if mods_pack in ('readme.txt',):
+        continue
     path_to_mods = os.path.join(os.getcwd(), 'res', 'mods', mods_pack)
     make_zipfile('{}.zip'.format(path_to_mods), os.path.join(PATH_TO_UNPACK_MODS, mods_pack), mods_pack)
     print('[INFO]: Mod {} pack'.format(mods_pack))

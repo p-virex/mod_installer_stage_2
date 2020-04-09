@@ -7,7 +7,7 @@ g_PYTHON_START = True if os.path.isfile(os.path.join(os.getcwd(), 'start_python'
 
 g_DEBUG = True if os.path.isfile(os.path.join(os.getcwd(), 'debug')) else False
 
-VERSION = '2.0.2.0'
+VERSION = '2.0.3.0'
 
 TITLE = 'PVirex installer {}'.format(VERSION)
 
