@@ -76,8 +76,8 @@ class SearchGamePanelUi(TemplatePanel):
                 logger.info('Game found in working_dir: {}'.format(subtags.text))
         self.append_path_in_selector()
         if g_cache.get_from_cache('last_client'):
-            self.event_sync_cache()
-        self.game_path.SetSelection(0)
+            if not self.event_sync_cache():
+                self.game_path.SetSelection(0)
 
     def event_sync_cache(self):
         last_path = g_cache.get_from_cache('last_client')
@@ -85,8 +85,9 @@ class SearchGamePanelUi(TemplatePanel):
             if path == last_path:
                 logger.info('Last path exist')
                 self.game_path.SetSelection(ind)
-                return
+                return True
         self.game_path.SetSelection(0)
+        return
 
     def append_path_in_selector(self):
         self.game_path.Clear()
