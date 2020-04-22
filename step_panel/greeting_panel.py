@@ -11,9 +11,9 @@ class GreetingPanelUi(TemplatePanel):
         self.SetSizeHints(minSize=SIZE_PANEL, maxSize=SIZE_PANEL)
 
         self.logo_image = wx.Bitmap(MAIN_LOGO_600x500_PATH)
-        self.button_back = wx.Button(self, wx.ID_ANY, self.get_text('exit_button'))
-        self.button_next = wx.Button(self, wx.ID_ANY, self.get_text('next_button'))
-        static_text = wx.StaticText(self, wx.ID_ANY, self.get_text('greeting'))
+        self.button_back = wx.Button(self, wx.ID_ANY, _('exit_button'))
+        self.button_next = wx.Button(self, wx.ID_ANY, _('next_button'))
+        static_text = wx.StaticText(self, wx.ID_ANY, _('greeting'))
         self.main_vertical_sizer = wx.BoxSizer(wx.VERTICAL)
         self.button_sizer = wx.BoxSizer(wx.HORIZONTAL)
         text_sizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, ''), wx.HORIZONTAL)

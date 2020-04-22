@@ -17,11 +17,11 @@ class SearchGamePanelUi(TemplatePanel):
         self.SetSizeHints(minSize=SIZE_PANEL, maxSize=SIZE_PANEL)
         self.logo_image = wx.Bitmap(MAIN_LOGO_600x100_PATH)
         self.game_path = wx.Choice(self, wx.ID_ANY, choices=[])
-        self.button_manual = wx.Button(self, wx.ID_ANY, self.get_text('overview_button'))
-        self.button_back = wx.Button(self, wx.ID_ANY, self.get_text('back_button'))
-        self.button_next = wx.Button(self, wx.ID_ANY, self.get_text('next_button'))
+        self.button_manual = wx.Button(self, wx.ID_ANY, _('overview_button'))
+        self.button_back = wx.Button(self, wx.ID_ANY,  _('back_button'))
+        self.button_next = wx.Button(self, wx.ID_ANY,  _('next_button'))
 
-        static_text = wx.StaticText(self, wx.ID_ANY, self.get_text('select_path_game'))
+        static_text = wx.StaticText(self, wx.ID_ANY, _('select_path_game'))
 
         self.main_vertical_sizer = wx.BoxSizer(wx.VERTICAL)
         self.button_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -47,7 +47,7 @@ class SearchGamePanelUi(TemplatePanel):
         self.search_path_game()
 
     def event_select_dir(self, event):
-        dlg = wx.DirDialog(self, self.get_text('select_dir'), style=wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST)
+        dlg = wx.DirDialog(self, _('select_dir'), style=wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST)
         if dlg.ShowModal() == wx.ID_OK:
             if self.check_mods_dir_version(dlg.GetPath(), check_client=True):
                 if dlg.GetPath() not in self.path_client_list:
@@ -56,7 +56,7 @@ class SearchGamePanelUi(TemplatePanel):
                     self.game_path.SetSelection(int(self.game_path.GetCount()) - 1)
                     self.button_next.Enable()
                 else:
-                    wx.MessageBox(self.get_text('game_in_list_error'), 'Warning')
+                    wx.MessageBox(_('game_in_list_error'), 'Warning')
         dlg.Destroy()
         event.Skip()
 
@@ -105,6 +105,6 @@ class SearchGamePanelUi(TemplatePanel):
                 return True
             elif subtags.text.split()[0] != VERSION_CLIENT and check_client:
                 # todo сделать отдельный метод в template_panel
-                logger.error(self.get_text('broken_version') % (subtags.text, VERSION_CLIENT, path))
-                wx.MessageBox(self.get_text('broken_version') % (subtags.text, VERSION_CLIENT, path), 'Warning')
+                logger.error(_('broken_version') % (subtags.text, VERSION_CLIENT, path))
+                wx.MessageBox(_('broken_version') % (subtags.text, VERSION_CLIENT, path), 'Warning')
                 return

@@ -11,12 +11,13 @@ from common.path import LOG_FOLDER
 ROOT_LOG = 'common.log'
 OUTPUT_LOG = 'only_gui.log'
 
+
+if not os.path.exists(LOG_FOLDER):
+    os.makedirs(LOG_FOLDER, mode=777)
+
 if g_PYTHON_START:
     # в случае запуска из pyCharm использовать root папку для логов
     LOG_FOLDER = os.path.join(os.getcwd(), 'Logs')
-
-if not os.path.exists(LOG_FOLDER) and not g_DEBUG:
-    os.makedirs(LOG_FOLDER, mode=777)
 
 DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 ROOT_FORMATTER = logging.Formatter(

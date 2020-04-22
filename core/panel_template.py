@@ -1,10 +1,5 @@
-import gettext
-import os
-
 import wx
 
-from common.common_utils import resource_path
-from common.constants import DEFAULT_LANG
 from core.logger import logger
 
 
@@ -16,17 +11,6 @@ class TemplatePanel(wx.Panel):
         super(TemplatePanel, self).__init__(parent)
         self.frame = parent
         self.panel_name = panel_name
-        self.set_language()
-
-    @staticmethod
-    def set_language():
-        """
-        Метод устанавливает язык, на даыннй момент по деволту только RU
-        """
-        logger.info('Set language: {}'.format(DEFAULT_LANG))
-        os.environ["LANGUAGE"] = "{}.UTF-8".format(DEFAULT_LANG)
-        gettext.bindtextdomain('{}'.format(DEFAULT_LANG).lower(), resource_path('locales'))
-        gettext.textdomain('{}'.format(DEFAULT_LANG).lower())
 
     def event_next_step(self, event):
         """
@@ -67,11 +51,3 @@ class TemplatePanel(wx.Panel):
 
     def get_static_bitmap(self, path_image):
         return wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(path_image))
-
-    @staticmethod
-    def get_text(key):
-        """
-        Получить текст по ключу.
-        :param key: ключ
-        """
-        return gettext.gettext(key)

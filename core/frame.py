@@ -1,6 +1,10 @@
+import os
+import gettext
+
 import wx
 
-from common.constants import TITLE, SIZE_FRAME, FRAME_STYLE
+from common.common_utils import resource_path
+from common.constants import TITLE, SIZE_FRAME, FRAME_STYLE, DEFAULT_LANG
 from common.path import ICON_PATH
 from core.logger import logger
 
@@ -8,6 +12,7 @@ from core.logger import logger
 class ModsFrame(wx.Frame):
     def __init__(self, panel_info, parent=None):
         super(ModsFrame, self).__init__(parent, wx.ID_ANY, title=TITLE, size=wx.Size(SIZE_FRAME), style=FRAME_STYLE)
+        # self.set_language()
         self.SetSizeHints(minSize=SIZE_FRAME, maxSize=SIZE_FRAME)
         self.Centre(direction=wx.BOTH)
         self.SetIcon(wx.Icon(ICON_PATH))
@@ -20,6 +25,16 @@ class ModsFrame(wx.Frame):
         self.ind_panel = dict()
         self.panel_ind = dict()
         self.registrate_panel()
+
+    @staticmethod
+    def set_language():
+        """
+        Метод устанавливает язык, на даыннй момент по деволту только RU
+        """
+        logger.info('Set language: {}'.format(DEFAULT_LANG))
+        os.environ["LANGUAGE"] = "{}.UTF-8".format(DEFAULT_LANG)
+        gettext.bindtextdomain('{}'.format(DEFAULT_LANG).lower(), resource_path('locales'))
+        gettext.textdomain('{}'.format(DEFAULT_LANG).lower())
 
     def index_panel(self):
         """

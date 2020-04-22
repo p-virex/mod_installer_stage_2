@@ -17,11 +17,11 @@ class InstallPanelUi(TemplatePanel):
         self.main_vertical_sizer = wx.BoxSizer(wx.VERTICAL)
         self.progress_bar = wx.Gauge(self, wx.ID_ANY, style=wx.GA_HORIZONTAL)
         self.logging_window = wx.TextCtrl(self, wx.ID_ANY, style=wx.TE_MULTILINE | wx.TE_READONLY, size=(-1, 300))
-        self.button_back = wx.Button(self, wx.ID_ANY, self.get_text('exit_button'))
+        self.button_back = wx.Button(self, wx.ID_ANY, _('exit_button'))
         self.button_youtube = wx.Button(self, wx.ID_ANY, 'Youtube')
         self.button_donate = wx.Button(self, wx.ID_ANY, 'Donate')
         self.event_list = list()
-        static_text = wx.StaticText(self, wx.ID_ANY, self.get_text('install_mods'))
+        static_text = wx.StaticText(self, wx.ID_ANY, _('install_mods'))
 
         button_sizer = wx.BoxSizer(wx.HORIZONTAL)
         text_sizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, ''), wx.HORIZONTAL)

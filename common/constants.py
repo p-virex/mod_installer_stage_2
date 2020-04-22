@@ -25,4 +25,6 @@ DROP_XVM_FOLDER = ['xvm\\Hitlog', 'xvm\\cache', 'xvm\\custom_data', 'xvm\\statis
 
 DEFAULT_LANG = 'RU'
 
+SELECT_LANG = ['RU', 'EN']
+
 SET_IN_GAME_FOLDER = True

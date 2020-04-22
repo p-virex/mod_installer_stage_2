@@ -11,7 +11,7 @@ block_cipher = None
 a = Analysis(['mods_install.py'],
              pathex=['E:\\my_project\\mod_installer_stage_2'],
              binaries=[],
-             datas=[('res/locales/RU/LC_MESSAGES/ru.mo', 'res/locales/RU/LC_MESSAGES')],
+             datas=[('res/locales/RU/LC_MESSAGES/ru.mo', 'res/locales/RU/LC_MESSAGES'), ('res/locales/EN/LC_MESSAGES/en.mo', 'res/locales/EN/LC_MESSAGES')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -67,4 +67,6 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False, icon=os.path.join(path_cwd, 'res\\res_image\\main.ico'), version='version.txt')
+          console=False,
+          icon=os.path.join(path_cwd, 'res\\res_image\\main.ico'),
+          version='version.txt')

@@ -25,25 +25,25 @@ class InstallScenario:
 
         if pre_panel.checkbox_del_old_mods.GetValue():
             client_path = self.frame.panel_init_dict['search_game'].game_path.GetStringSelection()
-            self.send_msg(self.install_panel.get_text('del_mods_install'))
+            self.send_msg(_('del_mods_install'))
             mod_folder = os.path.join(client_path, 'mods', ONLY_INT_VERSION)
             self.remove_folders(os.path.join(client_path, 'mods'), [ONLY_INT_VERSION])
             if not os.path.exists(mod_folder):
-                os.mkdir(mod_folder)
+                os.makedirs(mod_folder)
             self.update_progress_bar('del_mods')
 
         if pre_panel.checkbox_del_mods_cache.GetValue():
-            self.send_msg(self.install_panel.get_text('install_del_game_cache'))
+            self.send_msg(_('install_del_game_cache'))
             self.remove_folders(PATH_TO_CACHE_WOT, DROP_XVM_FOLDER)
             self.update_progress_bar('del_mods_cache')
 
         if pre_panel.checkbox_del_game_cache.GetValue():
-            self.send_msg(self.install_panel.get_text('install_del_cache'))
+            self.send_msg(_('install_del_cache'))
             self.remove_folders(PATH_TO_CACHE_WOT, DROP_GAME_FOLDER)
             self.update_progress_bar('del_game_cache')
 
         if pre_panel.checkbox_backup.GetValue():
-            self.send_msg(self.install_panel.get_text('del_mods_install'))
+            self.send_msg(_('del_mods_install'))
             self.create_backup()
             self.update_progress_bar('backup')
 
@@ -52,7 +52,7 @@ class InstallScenario:
         mods_panel = self.frame.panel_init_dict['select_mods']
         full_path = os.path.join(self.client_path, 'mods', VERSION_CLIENT.lstrip('v.'))
         if not os.path.isdir(full_path):
-            self.send_msg(self.install_panel.get_text('dir_not_found') % full_path)
+            self.send_msg(_('dir_not_found') % full_path)
             return
 
         for name_mod in mods_panel.selected_mods_list:
@@ -66,7 +66,7 @@ class InstallScenario:
 
                 mod_path = os.path.normpath(g_MODS_CONFIG[name_group][name_mod][1])
                 self.unpack_mod(mod_path, name_mod)
-        self.send_msg(self.install_panel.get_text('mods_installed') % self.client_path)
+        self.send_msg(_('mods_installed') % self.client_path)
         self.install_panel.button_back.Enable()
 
     def unpack_mod(self, mod_path, name_mod):
@@ -74,7 +74,7 @@ class InstallScenario:
         zip_file = zipfile.ZipFile(resource_path(mod_path), 'r')
         zip_file.extractall(full_path)
         zip_file.close()
-        self.send_msg(self.install_panel.get_text('success_install') % name_mod)
+        self.send_msg(_('success_install') % name_mod)
         self.update_progress_bar(name_mod)
 
     def create_backup(self):

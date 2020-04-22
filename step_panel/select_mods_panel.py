@@ -23,8 +23,8 @@ class SelectModsPanelUi(TemplatePanel):
         self.button_sizer = wx.BoxSizer(wx.HORIZONTAL)
         # self.button_back = wx.BitmapButton(self, wx.ID_ANY, self.get_convert_bitmap(BACK_BUTTON_PATH))
         # self.button_next = wx.BitmapButton(self, wx.ID_ANY, self.get_convert_bitmap(NEXT_BUTTON_PATH))
-        self.button_back = wx.Button(self, wx.ID_ANY, self.get_text('back_button'))
-        self.button_next = wx.Button(self, wx.ID_ANY, self.get_text('next_button'))
+        self.button_back = wx.Button(self, wx.ID_ANY, _('back_button'))
+        self.button_next = wx.Button(self, wx.ID_ANY, _('next_button'))
         self.button_next.Disable()
         self.mods_panel = ThreeSelector(self)
         self.choice_stream_settings = wx.Choice(self, wx.ID_ANY, choices=PRESET_NAMES)
@@ -94,7 +94,7 @@ class SelectModsPanelUi(TemplatePanel):
                         # если элемент находится в пресетах, то установить ему выбор
                         self.mods_panel.SetItem3StateValue(item, True)
                     else:
-                        logger.info('{}, cahe mods: {}'.format(name_mod_, cache_mods))
+                        logger.info('{}, cache mods: {}'.format(name_mod_, cache_mods))
                         if cache_mods and name_mod_ in cache_mods:
                             self.mods_panel.SetItem3StateValue(item, True)
         # если не развернуть three то тултипы не будут работать правильно
