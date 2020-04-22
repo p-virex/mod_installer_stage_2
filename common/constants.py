@@ -7,11 +7,11 @@ g_PYTHON_START = True if os.path.isfile(os.path.join(os.getcwd(), 'start_python'
 
 g_DEBUG = True if os.path.isfile(os.path.join(os.getcwd(), 'debug')) else False
 
-VERSION = '2.0.3.0'
+VERSION = '2.1.0.0'
 
 TITLE = 'PVirex installer {}'.format(VERSION)
 
-VERSION_CLIENT = 'v.1.8.0.2'
+VERSION_CLIENT = 'v.1.9.0.0'
 ONLY_INT_VERSION = VERSION_CLIENT.lstrip('v.')
 
 SIZE_FRAME = (600, 660)
